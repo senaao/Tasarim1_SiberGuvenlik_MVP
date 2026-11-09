@@ -1,0 +1,24 @@
+# Buyuk veri dosyalari
+data/
+corpus_kontrol_paketi/
+*.jsonl
+*.pdf
+*.zip
+
+# API anahtarlari ve gizli bilgiler
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+
+# Python gecici dosyalari
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Gecici ciktilar
+.ipynb_checkpoints/
+# Log dosyalari
+*.log

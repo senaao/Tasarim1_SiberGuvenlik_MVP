@@ -1,0 +1,5 @@
+# Cybersecurity Dataset MVP — dependencies used by existing scripts
+PyMuPDF>=1.24
+pypdf>=4.0
+requests>=2.31
+scikit-learn>=1.4

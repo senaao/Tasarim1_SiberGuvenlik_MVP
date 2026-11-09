@@ -1,0 +1,64 @@
+id_1,id_2,tfidf_cosine_similarity,source_document_1,source_document_2
+cyber_000074,cyber_000090,0.8941,NIST_SP800-53r5_Security_Controls.txt,NIST_SP800-53r5_Security_Controls.txt
+cyber_000668,cyber_004375,0.9592,ENISA%20Threat%20Landscape%202023.txt,ENISA%20Threat%20Landscape%202022.txt
+cyber_000670,cyber_004372,0.8918,ENISA%20Threat%20Landscape%202023.txt,ENISA%20Threat%20Landscape%202022.txt
+cyber_000671,cyber_004373,0.9105,ENISA%20Threat%20Landscape%202023.txt,ENISA%20Threat%20Landscape%202022.txt
+cyber_001198,cyber_002293,0.8688,NIST.SP.800-162.txt,NIST.SP.800-83r1.txt
+cyber_001532,cyber_003891,0.8388,"Data Confidentiality_ Detect, Respond to, and Recover from Data Breaches.txt",Data Confidentiality_ Identifying and Protecting Assets Against Data Breaches.txt
+cyber_001536,cyber_003894,0.83,"Data Confidentiality_ Detect, Respond to, and Recover from Data Breaches.txt",Data Confidentiality_ Identifying and Protecting Assets Against Data Breaches.txt
+cyber_001537,cyber_003895,0.9832,"Data Confidentiality_ Detect, Respond to, and Recover from Data Breaches.txt",Data Confidentiality_ Identifying and Protecting Assets Against Data Breaches.txt
+cyber_001663,cyber_001861,0.8823,Computer Security Division 2012 Annual Report.txt,Computer Security Division 2013 Annual Report.txt
+cyber_001999,cyber_002083,0.8871,The.Hacker.Playbook.3.Practical.Guide.To.Penetration.Testing.txt,The.Hacker.Playbook.3.Practical.Guide.To.Penetration.Testing.txt
+cyber_002723,cyber_002821,0.8563,Digital Identity Guidelines_ Authentication and Authenticator Management.txt,A Zero Trust Architecture Model for Access Control in Cloud-Native Applications in Multi-Cloud Environments.txt
+cyber_002919,cyber_004187,0.868,"Patrick Engebretson The Basics of Hacking and Penetration Testing, Second Edition (2013).txt",The_Basics_Of_Hacking_And_Penetration_Testing_Ethical_Hacking_And.txt
+cyber_002958,cyber_004219,0.8807,"Patrick Engebretson The Basics of Hacking and Penetration Testing, Second Edition (2013).txt",The_Basics_Of_Hacking_And_Penetration_Testing_Ethical_Hacking_And.txt
+cyber_003030,cyber_004275,0.836,"Patrick Engebretson The Basics of Hacking and Penetration Testing, Second Edition (2013).txt",The_Basics_Of_Hacking_And_Penetration_Testing_Ethical_Hacking_And.txt
+cyber_003031,cyber_004276,0.8603,"Patrick Engebretson The Basics of Hacking and Penetration Testing, Second Edition (2013).txt",The_Basics_Of_Hacking_And_Penetration_Testing_Ethical_Hacking_And.txt
+cyber_003034,cyber_004278,0.8794,"Patrick Engebretson The Basics of Hacking and Penetration Testing, Second Edition (2013).txt",The_Basics_Of_Hacking_And_Penetration_Testing_Ethical_Hacking_And.txt
+cyber_003035,cyber_004279,0.879,"Patrick Engebretson The Basics of Hacking and Penetration Testing, Second Edition (2013).txt",The_Basics_Of_Hacking_And_Penetration_Testing_Ethical_Hacking_And.txt
+cyber_003036,cyber_004280,0.8633,"Patrick Engebretson The Basics of Hacking and Penetration Testing, Second Edition (2013).txt",The_Basics_Of_Hacking_And_Penetration_Testing_Ethical_Hacking_And.txt
+cyber_003037,cyber_004281,0.8769,"Patrick Engebretson The Basics of Hacking and Penetration Testing, Second Edition (2013).txt",The_Basics_Of_Hacking_And_Penetration_Testing_Ethical_Hacking_And.txt
+cyber_003040,cyber_004284,0.8382,"Patrick Engebretson The Basics of Hacking and Penetration Testing, Second Edition (2013).txt",The_Basics_Of_Hacking_And_Penetration_Testing_Ethical_Hacking_And.txt
+cyber_003064,cyber_003066,0.9027,btypk_siberguv_rapor_20211027.txt,btypk_siberguv_rapor_20211027.txt
+cyber_003064,cyber_003065,0.9824,btypk_siberguv_rapor_20211027.txt,btypk_siberguv_rapor_20211027.txt
+cyber_003065,cyber_003066,0.8979,btypk_siberguv_rapor_20211027.txt,btypk_siberguv_rapor_20211027.txt
+cyber_003392,cyber_005143,0.8401,Computer Security Division 2010 Annual Report.txt,Computer Security Division 2009 Annual Report.txt
+cyber_003891,cyber_003915,0.902,Data Confidentiality_ Identifying and Protecting Assets Against Data Breaches.txt,Data Confidentiality_ Identifying and Protecting Assets Against Data Breaches.txt
+cyber_004006,cyber_009383,0.838,NIST.SP.800-63C.txt,NIST.SP.800-63A.txt
+cyber_004006,cyber_008458,0.8383,NIST.SP.800-63C.txt,NIST.SP.800-63B.txt
+cyber_004061,cyber_007848,0.8916,Computer Security Division 2015 Annual Report.txt,Computer Security Division 2014 Annual Report.txt
+cyber_004494,cyber_005998,0.8949,BTK Akademi_Siber Güvenliğe Giriş_Atıl Samancıoğlu.txt,Cyber Security - (arslanengin.com.tr).txt
+cyber_004499,cyber_006003,0.8712,BTK Akademi_Siber Güvenliğe Giriş_Atıl Samancıoğlu.txt,Cyber Security - (arslanengin.com.tr).txt
+cyber_004500,cyber_006004,0.924,BTK Akademi_Siber Güvenliğe Giriş_Atıl Samancıoğlu.txt,Cyber Security - (arslanengin.com.tr).txt
+cyber_004504,cyber_006007,0.8738,BTK Akademi_Siber Güvenliğe Giriş_Atıl Samancıoğlu.txt,Cyber Security - (arslanengin.com.tr).txt
+cyber_004920,cyber_004923,0.8579,Unlocking with the Heart_ Investigating User Perceptions of.txt,Unlocking with the Heart_ Investigating User Perceptions of.txt
+cyber_004921,cyber_004924,0.8398,Unlocking with the Heart_ Investigating User Perceptions of.txt,Unlocking with the Heart_ Investigating User Perceptions of.txt
+cyber_004946,cyber_004952,0.8688,AgentPhishing_ A Benchmark of LLM Email Agents Under Adaptiv.txt,AgentPhishing_ A Benchmark of LLM Email Agents Under Adaptiv.txt
+cyber_004946,cyber_004949,0.9045,AgentPhishing_ A Benchmark of LLM Email Agents Under Adaptiv.txt,AgentPhishing_ A Benchmark of LLM Email Agents Under Adaptiv.txt
+cyber_004949,cyber_004953,0.8324,AgentPhishing_ A Benchmark of LLM Email Agents Under Adaptiv.txt,AgentPhishing_ A Benchmark of LLM Email Agents Under Adaptiv.txt
+cyber_004949,cyber_004952,0.9376,AgentPhishing_ A Benchmark of LLM Email Agents Under Adaptiv.txt,AgentPhishing_ A Benchmark of LLM Email Agents Under Adaptiv.txt
+cyber_005144,cyber_009329,0.8722,Computer Security Division 2009 Annual Report.txt,Computer Security Division 2008 Annual Report.txt
+cyber_005169,cyber_009357,0.9013,Computer Security Division 2009 Annual Report.txt,Computer Security Division 2008 Annual Report.txt
+cyber_005187,cyber_008442,0.9464,OWASP_Application_Security_Verification_Standard_5.0.0_en (1).txt,OWASP_Application_Security_Verification_Standard_5.0.0_en.txt
+cyber_005190,cyber_008443,0.8542,OWASP_Application_Security_Verification_Standard_5.0.0_en (1).txt,OWASP_Application_Security_Verification_Standard_5.0.0_en.txt
+cyber_005193,cyber_008446,0.8938,OWASP_Application_Security_Verification_Standard_5.0.0_en (1).txt,OWASP_Application_Security_Verification_Standard_5.0.0_en.txt
+cyber_005194,cyber_008447,0.905,OWASP_Application_Security_Verification_Standard_5.0.0_en (1).txt,OWASP_Application_Security_Verification_Standard_5.0.0_en.txt
+cyber_005195,cyber_008449,0.9499,OWASP_Application_Security_Verification_Standard_5.0.0_en (1).txt,OWASP_Application_Security_Verification_Standard_5.0.0_en.txt
+cyber_005214,cyber_008450,0.9915,OWASP_Application_Security_Verification_Standard_5.0.0_en (1).txt,OWASP_Application_Security_Verification_Standard_5.0.0_en.txt
+cyber_005220,cyber_008451,0.9978,OWASP_Application_Security_Verification_Standard_5.0.0_en (1).txt,OWASP_Application_Security_Verification_Standard_5.0.0_en.txt
+cyber_005241,cyber_008452,0.8768,OWASP_Application_Security_Verification_Standard_5.0.0_en (1).txt,OWASP_Application_Security_Verification_Standard_5.0.0_en.txt
+cyber_005265,cyber_006015,0.935,Enhanced Security Requirements for Protecting Controlled Unclassified Information_ A Supplement to NIST Special Publication 800-171.txt,NIST.SP.800-172.txt
+cyber_005290,cyber_007978,0.969,Enhanced Security Requirements for Protecting Controlled Unclassified Information_ A Supplement to NIST Special Publication 800-171.txt,NIST.SP.800-160v2.txt
+cyber_005291,cyber_007979,0.9592,Enhanced Security Requirements for Protecting Controlled Unclassified Information_ A Supplement to NIST Special Publication 800-171.txt,NIST.SP.800-160v2.txt
+cyber_005292,cyber_007980,0.9716,Enhanced Security Requirements for Protecting Controlled Unclassified Information_ A Supplement to NIST Special Publication 800-171.txt,NIST.SP.800-160v2.txt
+cyber_005293,cyber_007981,0.9774,Enhanced Security Requirements for Protecting Controlled Unclassified Information_ A Supplement to NIST Special Publication 800-171.txt,NIST.SP.800-160v2.txt
+cyber_006083,cyber_006119,0.8821,Data Integrity_ Recovering from Ransomware and Other Destructive Events.txt,Data Integrity_ Recovering from Ransomware and Other Destructive Events.txt
+cyber_006160,cyber_006192,0.8759,Domain Name System-Based Electronic Mail Security.txt,Domain Name System-Based Electronic Mail Security.txt
+cyber_007064,cyber_007198,0.9406,WiFi.HackProofYourWirelessNetwork.txt,WiFi.HackProofYourWirelessNetwork.txt
+cyber_007138,cyber_007204,0.9232,WiFi.HackProofYourWirelessNetwork.txt,WiFi.HackProofYourWirelessNetwork.txt
+cyber_007368,cyber_009551,0.8686,An Empirical Evaluation of Signing and Verification Performa.txt,A Security Analysis of Verifiable Credential Verification Pi.txt
+cyber_007438,cyber_007443,0.8854,Derived PIV Application and Data Model Test Guidelines.txt,Derived PIV Application and Data Model Test Guidelines.txt
+cyber_007439,cyber_007442,0.846,Derived PIV Application and Data Model Test Guidelines.txt,Derived PIV Application and Data Model Test Guidelines.txt
+cyber_007440,cyber_007442,0.8386,Derived PIV Application and Data Model Test Guidelines.txt,Derived PIV Application and Data Model Test Guidelines.txt
+cyber_008457,cyber_009382,0.8689,NIST.SP.800-63B.txt,NIST.SP.800-63A.txt
+cyber_008458,cyber_009383,0.8584,NIST.SP.800-63B.txt,NIST.SP.800-63A.txt

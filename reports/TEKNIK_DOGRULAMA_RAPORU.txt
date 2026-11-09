@@ -1,0 +1,23 @@
+=== SIBER GUVENLIK VERI SETI DOGRULAMASI ===
+Proje: C:\Users\snmrl\Tasarim1_SiberGuvenlik_MVP
+
+CORPUS
+  full :  9554 kayit | beklenen  9554 | OK
+  train:  7702 kayit | beklenen  7702 | OK
+  val  :   980 kayit | beklenen   980 | OK
+  test :   872 kayit | beklenen   872 | OK
+
+INSTRUCTION
+  full :  3075 kayit | beklenen  3075 | OK
+  train:  2448 kayit | beklenen  2448 | OK
+  val  :   326 kayit | beklenen   326 | OK
+  test :   301 kayit | beklenen   301 | OK
+
+CORPUS-INSTRUCTION KAYNAK ESLESMESI
+  train: 450 instruction kaynagi, eslesmeyen 0
+  val  : 56 instruction kaynagi, eslesmeyen 0
+  test : 56 instruction kaynagi, eslesmeyen 0
+
+SONUC
+TEKNIK KONTROL GECTI: sayilar, JSON, ID ve kaynak bazli bolmeler uyumlu.
+Not: Anlamsal dogruluk, kaynak lisanslari ve near-duplicate incelemesi ayrica gereklidir.

@@ -1,0 +1,1 @@
+print("Soru üretme sistemim çalışıyor!")

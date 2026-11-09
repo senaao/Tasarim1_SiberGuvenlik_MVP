@@ -1,0 +1,11 @@
+=== YENI SPLIT BAGIMSIZ TEKNIK KONTROLU ===
+Corpus: 9554 | train=7643, val=1059, test=852
+Instruction: 3075 | train=2418, val=359, test=298
+Tum IDler korundu: OK
+Eski ve yeni veri icerigi (split haric) ayni: OK
+Bolme dosyalari ve tam dosyalar eslesiyor: OK
+Kaynak bazli bolme ve Corpus-Instruction eslesmesi: OK
+Tespit edilen 63 benzer ciftten bolmeler arasi kalan: 0
+Tasinan kaynak: 8 | Corpus parcasi: 199 | Soru: 64
+SONUC: BAGIMSIZ TEKNIK KONTROL GECTI
+Sinir: Anlamsal dogruluk, lisanslar ve tespit edilmeyen olasi benzerlikler kontrol edilmedi.
