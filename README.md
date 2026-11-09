@@ -17,7 +17,12 @@ Hedef, sonraki aşamalarda bilgi erişimi, alan uyarlaması ve instruction fine-
 | Veri seti | Toplam kayıt | Farklı kaynak belge | Train | Validation | Test |
 |---|---:|---:|---:|---:|---:|
 | Domain Corpus | 9.554 metin parçası | 731 | 7.643 | 1.059 | 852 |
-| Instruction Dataset | 3.075 soru-cevap | 562 | 2.418 | 359 | 298 |
+| Instruction Dataset (orijinal aday) | 3.075 soru-cevap | 562 | 2.418 | 359 | 298 |
+| SFT geçici kalite adayı | 3.063 soru-cevap | — | 2.410 | 357 | 296 |
+
+**SFT kalite notu:** Orijinal 3.075 soru-cevap kaydı korunmuştur. Model destekli kalite ön incelemesinde ciddi hata adayı olarak işaretlenen 12 kayıt (train 8, validation 2, test 2) ayrı bir karantina dosyasına alınmış, 3.063 kayıtlık **geçici** SFT adayı oluşturulmuştur. Kalan kayıtların tümünün insan tarafından onaylandığı iddia edilmez.
+
+**Corpus token sayımı:** `Qwen/Qwen3-4B-Base` tokenizer (`add_special_tokens=False`) ile 9.554 chunk üzerinde toplam **5.866.093 token** ölçülmüştür (ortalama 614, medyan 573, P95 948 token/chunk). Train / validation / test token sayıları: **4.731.185 / 622.499 / 512.409**. Ayrıntılar: `reports/corpus/VIZE_TOKEN_VE_ONCE_SONRA_RAPORU.txt`.
 
 Güncel veri bölmeleri `data/final/guvenli_split_aday/` klasöründedir.
 
@@ -46,11 +51,11 @@ Veri setleri aşağıdaki teknik siber güvenlik konularını kapsamaktadır:
 
 **Instruction Dataset:** JSONL biçiminde `id`, `source_document`, `topic`, `source_text`, `output` ve değerlendirme metaverilerini içerir.
 
-Instruction dosyasında soru ile cevap `output` alanında birlikte tutulmaktadır. Standart sohbet veya SFT eğitim şemasına dönüşüm henüz tamamlanmamıştır.
+Orijinal Instruction dosyasında soru ve cevap `output` alanında birlikte tutulur. Tüm **3.075 kayıt**, `scripts/12_sft_formatina_donustur.py` ile `messages` şemasına dönüştürülmüş ve `data/final/sft_aday/` altında train/val/test dosyaları oluşturulmuştur. Kalite ön incelemesinden sonra 12 kritik adayın ayrıldığı geçici küme `data/final/sft_kritik_12_ayrilmis_aday/` altındadır. Bu dönüşüm, yanıtların insan tarafından doğrulandığı anlamına gelmez.
 
 `topic` alanı konu etiketidir. Açıklama, karşılaştırma veya akıl yürütme gibi görev türlerinin doğrulanmış dağılımı henüz çıkarılmamıştır.
 
-Kaynak dosya adları mevcut olmakla birlikte 731 kaynağın tamamı için özgün URL, lisans ve yeniden dağıtım izni doğrulanmamıştır.
+Yerel `data/raw/` altında **1.283 PDF** envantere alınmıştır; bunlardan **731 farklı kaynak belge** mevcut Domain Corpus ile eşleşmektedir. Kaynak türleri arasında NIST, OWASP, ENISA yayın adayları, akademik makaleler, akademik slaytlar ve teknik kitaplar yer alır. Bu sınıflamalar ön incelemeye dayalıdır; her kaynak için özgün URL, lisans ve yeniden dağıtım izni doğrulanmış değildir. Envanter ve kaynak grubu adayları `reports/corpus/` altındadır.
 
 ## 4. Proje Klasör Yapısı
 
@@ -69,7 +74,12 @@ Tasarim1_SiberGuvenlik_MVP/
 │   ├── prepare_corpus.py
 │   ├── 08_validate_datasets.py
 │   ├── 09_resplit_near_duplicates.py
-│   └── 10_validate_resplit.py
+│   ├── 10_validate_resplit.py
+│   ├── 11_pdf_kaynak_envanteri.py
+│   ├── 12_sft_formatina_donustur.py
+│   ├── 13_qa_kalite_orneklemi_hazirla.py
+│   ├── 14_kritik_12_ayir.py
+│   └── 15_vize_token_ve_once_sonra.py
 │
 ├── reports/
 │   ├── VERI_SETI_ISTATISTIK_RAPORU_GUNCEL.md
@@ -77,9 +87,16 @@ Tasarim1_SiberGuvenlik_MVP/
 │   │   ├── CORPUS_KALITE_RAPORU.md
 │   │   ├── NEAR_DUPLICATE_INCELEME_RAPORU.md
 │   │   ├── GUvenli_split_on_raporu.md
-│   │   └── YENI_SPLIT_DOGRULAMA_RAPORU.txt
+│   │   ├── YENI_SPLIT_DOGRULAMA_RAPORU.txt
+│   │   ├── pdf_kaynak_envanteri.csv
+│   │   ├── KAYNAK_GRUPLARI_ON_SINIFLANDIRMA_731.csv
+│   │   └── VIZE_TOKEN_VE_ONCE_SONRA_RAPORU.txt
 │   └── instruction/
-│       └── MANUEL_KALITE_KONTROL_RAPORU.md
+│       ├── MANUEL_KALITE_KONTROL_RAPORU.md
+│       ├── SFT_DONUSUM_KONTROL_RAPORU.md
+│       ├── QA_KALITE_INCELEME_ORNEKLEMI_180.csv
+│       ├── QA_MODEL_ON_INCELEME_180.csv
+│       └── KRITIK_12_AYIRMA_KONTROL_RAPORU.md
 │
 ├── data/
 │   ├── raw/
@@ -96,6 +113,15 @@ Tasarim1_SiberGuvenlik_MVP/
 │           ├── source_resplit_manifest.csv
 │           ├── corpus/
 │           └── instruction/
+│       ├── sft_aday/
+│       │   ├── train.jsonl
+│       │   ├── val.jsonl
+│       │   └── test.jsonl
+│       └── sft_kritik_12_ayrilmis_aday/
+│           ├── train.jsonl
+│           ├── val.jsonl
+│           ├── test.jsonl
+│           └── kritik_12_karantina.jsonl
 │
 └── corpus_kontrol_paketi/
 ```
@@ -180,14 +206,22 @@ Buna ek olarak:
 - Öncelikli 28 kaydın 4'ü korunmuştur.
 - 11 kayıt kaynak pasajına göre yeniden yazılmıştır.
 - 13 kayıt kapsam dışında bırakılmıştır.
+- Sonraki aşamada 12 konuya dağıtılmış **180 soru-cevaplık** (train 120, validation 36, test 24; 179 farklı kaynak) kalite kontrol örneklemi oluşturulmuş ve **model destekli ön inceleme** yapılmıştır.
+- Bu ön incelemede **12 ciddi hata adayı** karantinaya ayrılmıştır; **18 kayıt** için düzeltme önerileri hazırlanmıştır. Öneriler ana veri setine otomatik uygulanmamıştır.
 
-Bu kontroller bağımsız uzman onayı anlamına gelmez.
+Bu kontroller bağımsız uzman onayı anlamına gelmez. 180 örnek için insan değerlendirmesi tamamlanmış değildir.
 
 Mevcut 3.075 sorunun tamamı kaynak metinler üzerinden tek tek bağımsız olarak doğrulanmamıştır.
 
 Kalite kontrol sonuçları ve sınırlılıklar şu dosyada açıklanmaktadır:
 
 `reports/instruction/MANUEL_KALITE_KONTROL_RAPORU.md`
+
+Ek kanıtlar: `reports/instruction/QA_KALITE_ON_RAPORU_180.md`, `reports/instruction/QA_MODEL_ON_INCELEME_180.csv`, `reports/instruction/KRITIK_12_AYIRMA_KONTROL_RAPORU.md` ve `reports/instruction/QA_18_DUZELTME_ONERILERI.csv`.
+
+### 6.1. Metin temizleme karşılaştırmaları
+
+`data/extracted/` ve `data/cleaned_v2/` altındaki aynı kaynak adına ait dosyalardan **12 gerçek önce/sonra başlangıç kesiti** karşılaştırılmıştır. Bunlar satır satır hizalanmış diff değil, karşılaştırmalı örneklerdir. Rapor: `reports/corpus/VIZE_TOKEN_VE_ONCE_SONRA_RAPORU.txt`.
 
 ## 7. Kurulum ve Çalıştırma
 
@@ -214,6 +248,8 @@ Kontrol raporu:
 - `08_validate_datasets.py` önceki bölümlemenin sayılarını kontrol eder.
 - `09_resplit_near_duplicates.py` yeni aday bölümleme oluşturmak için kullanılmıştır.
 - `10_validate_resplit.py` güncel aday bölümlemenin teknik kontrolü içindir.
+- `12_sft_formatina_donustur.py` SFT `messages` dönüşümünü; `13_qa_kalite_orneklemi_hazirla.py` inceleme örneklemini; `14_kritik_12_ayir.py` kritik kayıtların geçici ayrımını üretir.
+- `15_vize_token_ve_once_sonra.py` Qwen tokenizer ile Corpus token sayımı ve karşılaştırma raporu üretir; model ağırlıklarını indirmeyi gerektirmez.
 - Mevcut çıktıların üzerine yanlışlıkla yazmamak için bölümleme kodları çalıştırılmadan önce dosya yolları ve hedef klasörler kontrol edilmelidir.
 
 İlk PDF indirmesinden nihai JSONL dosyalarına kadar bütün işlem hattının başka bir bilgisayarda aynı sonuçları ürettiği henüz gösterilmemiştir.
@@ -228,10 +264,9 @@ Aşağıdaki işlemler tamamlanmış olarak değerlendirilmemektedir:
 2. Corpus ve Instruction Dataset için daha kapsamlı, kaynak temelli bağımsız manuel kalite kontrolü.
 3. Otomatik işaretli 246 Corpus parçasının değerlendirilmesi.
 4. Ek benzerlik kontrollerinin yapılması.
-5. Gerçek tokenizer ile token sayımı.
-6. Dil ve görev türü dağılımlarının ölçülmesi.
-7. Instruction kayıtlarının kullanılacak eğitim formatına dönüştürülmesi.
-8. Veri hazırlama sürecinin uçtan uca yeniden üretilebilirliğinin sınanması.
+5. Dil ve görev türü dağılımlarının güvenilir biçimde ölçülmesi.
+6. Veri hazırlama sürecinin uçtan uca yeniden üretilebilirliğinin sınanması.
+7. Düzeltme adaylarının kaynaklarla ayrıca doğrulanması ve gerekirse nihai SFT adayına uygulanması.
 
 ## 9. Lisans, Etik ve Paylaşım
 
@@ -253,7 +288,9 @@ bulundurulmaktadır.
 
 - `DATASET_CARD.md` — Domain Corpus'un yapısı, istatistikleri ve sınırlılıkları.
 - `INSTRUCTION_CARD.md` — Instruction Dataset'in üretimi, bölümlenmesi ve kalite durumu.
-- `reports/VERI_SETI_ISTATISTIK_RAPORU_GUNCEL.md` — Sayısal veri seti raporu.
+- `reports/VERI_SETI_ISTATISTIK_RAPORU_GUNCEL.md` — Güncellenmiş Corpus, Instruction ve SFT istatistikleri.
+- `reports/corpus/VIZE_TOKEN_VE_ONCE_SONRA_RAPORU.txt` — Token sayımı ve 12 gerçek metin karşılaştırması.
+- `reports/instruction/SFT_DONUSUM_KONTROL_RAPORU.md` — SFT `messages` dönüşümünün teknik kontrolü.
 - `reports/corpus/` — Corpus kalite kontrolü ve yeniden bölümleme raporları.
 - `reports/instruction/` — Instruction kalite inceleme raporları.
 

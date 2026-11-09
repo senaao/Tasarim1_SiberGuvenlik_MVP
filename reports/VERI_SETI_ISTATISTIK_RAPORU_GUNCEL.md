@@ -11,8 +11,10 @@
 | Kayıt | 9.554 metin parçası | 3.075 soru-cevap |
 | Farklı kaynak belge adı | 731 | 562 |
 | Bölümleme | Train/validation/test | Train/validation/test |
-| Gerçek tokenizer tabanlı token sayımı | Henüz ölçülmedi | Henüz ölçülmedi |
+| Gerçek tokenizer tabanlı token sayımı | **5.866.093 token (Qwen3-4B-Base)** | Instruction için ayrı ölçüm yapılmadı |
 | Tam bağımsız manuel kalite onayı | Tamamlanmadı | Tamamlanmadı |
+
+**Kaynak havuzu:** `data/raw` altında **1.283 PDF** tarandı; bunların **731 farklı kaynak dosyası** mevcut Corpus ile ad bazında eşleştirildi. Bu sayı tüm PDF'lerin Corpus'a dahil edildiği anlamına gelmez. Ayrıntılar: `reports/corpus/PDF_KAYNAK_ESLESME_RAPORU.md`.
 
 **Güncel ana dosyalar:**
 
@@ -50,7 +52,31 @@
 
 **Klasör:** `data/final/guvenli_split_aday/corpus/`
 
-### 2.2 Otomatik kalite işaretleri (ilk Corpus taraması)
+### 2.2 Qwen tokenizer ile token istatistikleri
+
+9.554 Corpus kaydının `text` alanı `Qwen/Qwen3-4B-Base` tokenizer ile, `add_special_tokens=False` parametresi kullanılarak ölçüldü. Bu sayılar bir model eğitimi veya model ağırlıklarının indirilmesi anlamına gelmez.
+
+| Ölçüm | Sonuç |
+|---|---:|
+| Toplam token | **5.866.093** |
+| Ortalama token / chunk | 614 |
+| Medyan token / chunk | 573 |
+| Minimum / maksimum token / chunk | 55 / 10.712 |
+| Chunk token P95 | 948 |
+| Tokenlanan kaynak belge | 731 |
+| Train token | 4.731.185 |
+| Validation token | 622.499 |
+| Test token | 512.409 |
+
+**Kanıt:** `reports/corpus/VIZE_TOKEN_VE_ONCE_SONRA_RAPORU.txt` ve `scripts/15_vize_token_ve_once_sonra.py`.
+
+### 2.3 Metin çıkarma ve temizleme karşılaştırmaları
+
+12 kaynak belge için `data/extracted` ve `data/cleaned_v2` içindeki başlangıç metin kesitleri karşılaştırıldı. Bu örnekler belge bazında eşleşir, ancak satır/sözcük seviyesinde hizalanmış fark analizi değildir. Ham metinlerdeki bazı ön sayfa ve yazar/kurum bilgileri temizleme sırasında değişmiş veya çıkarılmış olabilir; bütün değişikliklerin doğru olduğu ayrıca insan tarafından doğrulanmadı.
+
+**Kanıt:** `reports/corpus/VIZE_TOKEN_VE_ONCE_SONRA_RAPORU.txt` (12 karşılaştırma).
+
+### 2.4 Otomatik kalite işaretleri (ilk Corpus taraması)
 
 | Bayrak | İşaretli chunk |
 |---|---:|
@@ -73,7 +99,10 @@
 | Farklı `source_document` | 562 |
 | Farklı `topic` etiketi | 12 |
 | `Question:` ve `Answer:` bölümleri mevcut kayıt | 3.075 |
-| `verified: false` kayıt | 3.075 |
+| `verified: false` kayıt (orijinal aday) | 3.075 |
+| SFT `messages` biçimine dönüştürülen kayıt | 3.075 |
+| Ciddi hata adayı olarak ayrı tutulan kayıt | 12 |
+| Geçici SFT kümesinde kalan kayıt | 3.063 |
 
 ### 3.1 Güncel train/validation/test dağılımı
 
@@ -86,7 +115,22 @@
 
 **Klasör:** `data/final/guvenli_split_aday/instruction/`
 
-### 3.2 Güncel konu dağılımı — yeni split üzerinden tekrar sayıldı
+### 3.2 Güncel geçici SFT biçimi
+
+3.075 orijinal soru-cevap, `scripts/12_sft_formatina_donustur.py` ile `messages` tabanlı SFT JSONL biçimine dönüştürüldü. Ardından **12 ciddi hata adayı**, orijinal dosyalara dokunulmadan ayrı tutuldu.
+
+| Bölüm | Geçici SFT adayı | Ayrı tutulan ciddi hata adayı |
+|---|---:|---:|
+| Train | 2.410 | 8 |
+| Validation | 357 | 2 |
+| Test | 296 | 2 |
+| **Toplam** | **3.063** | **12** |
+
+**Geçici SFT klasörü:** `data/final/sft_kritik_12_ayrilmis_aday/`. Bu verilerin tümünün insan tarafından onaylandığı iddia edilmez; asıl 3.075 kayıt korunmuştur.
+
+**Dönüşüm raporları:** `reports/instruction/SFT_DONUSUM_KONTROL_RAPORU.md` ve `reports/instruction/KRITIK_12_AYIRMA_KONTROL_RAPORU.md`.
+
+### 3.3 Güncel konu dağılımı — orijinal 3.075 kayıt üzerinden
 
 | Konu | Train | Val | Test | Toplam | Pay |
 |---|---:|---:|---:|---:|---:|
@@ -131,19 +175,23 @@
 - `reports/corpus/GUvenli_split_on_raporu.md`
 - `reports/corpus/YENI_SPLIT_DOGRULAMA_RAPORU.txt`
 
-## 5. Manuel inceleme ve kalan kalite çalışmaları
+## 5. Kalite ön incelemesi ve manuel doğrulama durumu
 
 - Corpus'ta 246 metin parçası otomatik kalite uyarısı aldı. Tamamının manuel incelendiği söylenemez.
 - Corpus için 100–200 örneklik temsilî manuel kontrol henüz tamamlanmadı.
-- Instruction tarafında 60 örneklem için inceleme yapıldı; ayrıca 28 öncelikli kayıt değerlendirildi (4 korundu, 11 düzeltildi, 13 çıkarıldı). Bu incelemeler 3.075 sorunun tamamının doğrulandığı anlamına gelmez.
+- Önceki çalışmalarda 60 örnek için inceleme yapıldı; ayrıca 28 öncelikli kayıt değerlendirildi (4 korundu, 11 düzeltildi, 13 çıkarıldı). Bu değerler önceki aşamanın bulgularıdır.
+- Güncel adayın içinden **12 konu × 15 soru = 180 kayıt** (179 farklı kaynak belge) kalite kontrol örneklemine alındı. Bu 180 soru **model destekli ön incelemeden** geçti; insan tarafından tamamı onaylanmış değildir.
+- Ön incelemede **12 ciddi hata/eleme adayı, 18 düzeltme adayı, 25 alan dışı, 33 konu etiketi adayı, 36 ek kontrol gerektiren ve 56 belirgin hata bulunmayan** kayıt belirlendi. Bunlar birbirini dışlayan ilk sınıflandırma gruplarıdır; nihai kalite kararları değildir.
+- 12 ciddi aday geçici SFT kümesinden karantinaya ayrıldı; **18 düzeltme için öneri belgesi** oluşturuldu fakat bu öneriler ana veri setine uygulanmadı. 33 etiket önerisi ve diğer kalite kararları da nihai olarak uygulanmış değildir.
+- İlgili dosyalar: `reports/instruction/QA_KALITE_ON_RAPORU_180.md`, `reports/instruction/QA_MODEL_ON_INCELEME_180.csv`, `reports/instruction/QA_18_DUZELTME_ONERILERI.csv`.
 - Mevcut 3.075 Instruction kaydının `verified` alanı `false`; modelin `MODEL_PASS` etiketi bağımsız uzman doğrulaması değildir.
-- Kaynak URL'leri, lisanslar, yeniden dağıtım izinleri, dil yüzdeleri ve gerçek tokenizer temelli token sayıları henüz tamamlanmadı.
+- Kaynak URL'leri, lisanslar, yeniden dağıtım izinleri ve dil yüzdeleri tam doğrulanmadı. **Corpus token sayımı tamamlandı**; Instruction için ayrı token sayımı henüz yapılmadı.
 - Bu nedenle tam Corpus/Instruction JSONL dosyaları lisans doğrulanmadan herkese açık GitHub'a konulmamalıdır.
 
 ## 6. Ölçüm yöntemi
 
 - JSONL kayıtları satır satır okundu; `source_document`, `topic` ve `split` değerleri üzerinden sayımlar yapıldı.
-- Corpus karakter sayısı `len(text)`; kelime sayısı `text.split()` ile ölçüldü. Bunlar tokenizer tabanlı token sayısı değildir.
+- Corpus karakter sayısı `len(text)`; kelime sayısı `text.split()` ile ölçüldü. Tokenlar ise ayrıca `Qwen/Qwen3-4B-Base` tokenizer ile `add_special_tokens=False` kullanılarak hesaplandı.
 - Konu tablosundaki split sayıları **yeniden bölümleme sonrasındaki JSONL adayından** hesaplandı. Eski splitteki konu kırılımları kullanılmadı.
 - Bağımsız teknik doğrulama `scripts/10_validate_resplit.py` ile yapıldı.
 - Yakın tekrar sınırlaması `scripts/find_near_duplicates.py` tarafından oluşturulan 63 aday çift ve `scripts/09_resplit_near_duplicates.py` tarafından yapılan kaynak-gruplu yeniden bölümleme temelindedir.
@@ -161,4 +209,4 @@
 - Güncel aday: **`data/final/guvenli_split_aday/`**
 - Eski veri kartındaki 1.210 doküman / 127.555.685 karakter / 19.194.321 token bilgileri önceki derleme aşamasına aittir; güncel 9.554 parçalık adayın metrikleri yerine kullanılmaz.
 
-**İlgili belgeler:** `README.md`, `DATASET_CARD.md`, `INSTRUCTION_CARD.md` ve `reports/corpus/` ile `reports/instruction/` altındaki kalite kanıtları.
+**İlgili belgeler:** `README.md`, `DATASET_CARD.md`, `INSTRUCTION_CARD.md`, `reports/corpus/VIZE_TOKEN_VE_ONCE_SONRA_RAPORU.txt` ve `reports/corpus/` ile `reports/instruction/` altındaki kalite kanıtları.

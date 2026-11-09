@@ -53,7 +53,7 @@ JSONL biçiminde her satır ayrı bir JSON nesnesidir. Kaynak metnin gerçek PDF
 - Toplam karakter sayısı: **27.440.087**.
 - Boşlukla ayrılmış kelime sayısı: **3.988.017**.
 - Parça başına medyan karakter: **2.910** (önceki ölçüm; metinler aynı kaldı).
-- **Gerçek tokenizer temelli güncel token sayımı yapılmamıştır.**
+**Token istatistikleri:** Qwen/Qwen3-4B-Base tokenizer kullanılarak 9.554 Corpus parçasında toplam 5.866.093 token ölçülmüştür. Parça başına ortalama 614, medyan 573 ve P95 değeri 948 tokendır. Train kümesi 4.731.185, validation 622.499 ve test 512.409 token içermektedir.
 
 İlk bölümleme kaynak belge adlarına göre yapılmıştı. Ardından farklı adlarla saklanan benzer belgelerin bazı pasajlarının farklı train/val/test bölmelerinde kaldığı görüldü.
 
@@ -138,8 +138,7 @@ Bağımsız teknik denetim:
 
 Projedeki önceki `scripts/` betiklerinin tüm ilk aşamaları uçtan uca aynı sonuçla ürettiği henüz teyit edilmemiştir.
 
-Kaynak PDF karşılaştırması ve önce/sonra temizleme örnekleri ayrıca belgelenmelidir.
-
+Metin temizleme sürecini göstermek için 12 farklı kaynak belgenin extracted (ham çıkarılmış metin) ve cleaned_v2 (temizlenmiş metin) sürümleri karşılaştırılmıştır. Karşılaştırmalar reports/corpus/VIZE_TOKEN_VE_ONCE_SONRA_RAPORU.txt dosyasında belgelenmiştir.
 ## 7. Kalite kontrol ve bulgular
 
 9 Kasım 2026 itibarıyla otomatik inceleme:
@@ -226,7 +225,6 @@ Kaynak doğruluğu, güncellik ve lisansları kontrol edilmeden üretim ortamın
 - Corpus için manuel kalite örneklemesini tamamlamak ve kararları kayıt altına almak.
 - İşaretlenmiş 246 parçayı değerlendirmek.
 - İlk taramadaki 65 yakın tekrar adayı ile sonraki taramadaki 63 aday çiftin yöntem farklarını dikkate almak.
-- Kullanılacak modelin gerçek tokenizer'ıyla token istatistiklerini hesaplamak.
 - Dil ve alt konu etiketleriyle kaynak kapsama dağılımını doğrulamak.
 - Ham PDF'den son JSONL dosyasına kadar tekrarlanabilir veri hazırlama sürecini belgelendirmek.
 - Nihai değerlendirmeden sonra sürümü `v1.0` olarak ilan etmek.

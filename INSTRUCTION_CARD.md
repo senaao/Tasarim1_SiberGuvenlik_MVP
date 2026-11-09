@@ -4,7 +4,7 @@
 **Alan:** Teknik siber güvenlik  
 **Dil:** Soruların ve cevapların önemli bölümü İngilizce; kaynak pasajlarda Türkçe ve İngilizce metinler bulunabilir. Kesin dil oranı henüz ölçülmedi.  
 **Durum:** **Aday / kısmi kalite kontrol.** Veri setindeki tüm soru–cevapların bağımsız olarak onaylandığı iddia edilmez.  
-**Güncel bölümleme:** Yakın tekrar bağlantıları dikkate alınarak oluşturulmuş, teknik kontrolden geçmiş **yeni split adayı**.
+**Güncel bölümleme:** Yakın tekrar bağlantıları dikkate alınarak oluşturulmuş, teknik kontrolden geçmiş **yeni split adayı**. **SFT dönüşümü de yapıldı; 12 ciddi hata adayı karantinaya ayrıldı.**
 
 ## 1. Amaç ve kapsam
 
@@ -12,20 +12,20 @@ Teknik siber güvenlik belgelerinden çıkarılmış pasajlara dayanan, `source_
 
 ## 2. Veri miktarı ve güncel bölümleme
 
-- **Toplam:** 3.075 soru–cevap kaydı.
+- **Orijinal / tam aday:** 3.075 soru–cevap kaydı. **12 ciddi hata adayı karantinaya ayrıldıktan sonraki geçici SFT adayı:** 3.063 kayıt. Karantina bir kalite kararıdır, orijinal kayıtlarda silme yapılmamıştır.
 - **Farklı `source_document`:** 562.
 - **Dosya biçimi:** JSONL (her satır bir JSON nesnesi).
 - **Güncel yöntem:** Önce `source_document` bazında yapılan bölümlemede tespit edilen yakın tekrar bağlantıları, bağlı kaynak grupları hâlinde bir arada tutuldu. Corpus ve Instruction bölümleri birlikte yeniden eşleştirildi.
 - **Eski bölümleme tohumu:** `20261109`. Bu değer ilk bölmeye aittir; yeni yeniden bölümlemenin bağımsız bir rastgele tohumu olarak sunulmaz.
 
-| Bölüm | Güncel kayıt sayısı | Farklı kaynak belge | Pay |
+| Bölüm | Orijinal aday kayıt sayısı | Farklı kaynak belge | Pay |
 |---|---:|---:|---:|
 | Train | 2.418 | 449 | %78,63 |
 | Validation (`val`) | 359 | 60 | %11,67 |
 | Test | 298 | 53 | %9,69 |
 | **Toplam** | **3.075** | **562** | **%100** |
 
-**Aktif olarak kullanılacak yeni aday dosyalar:**
+**Orijinal 3.075 kayıtlık ve Corpus ile uyumlu yeni bölümleme:**
 
 ```text
 data/final/guvenli_split_aday/
@@ -40,6 +40,22 @@ data/final/guvenli_split_aday/
     ├── domain_corpus_val.jsonl
     └── domain_corpus_test.jsonl
 ```
+
+**SFT dönüşümü ve kalite ön elemesi (ayrı çıktı dosyaları):**
+
+| Bölüm | `messages` biçimine çevrilen | Karantinaya ayrılan | Geçici SFT adayı |
+|---|---:|---:|---:|
+| Train | 2.418 | 8 | 2.410 |
+| Validation | 359 | 2 | 357 |
+| Test | 298 | 2 | 296 |
+| **Toplam** | **3.075** | **12** | **3.063** |
+
+- SFT dönüşüm dosyaları: `data/final/sft_aday/train.jsonl`, `val.jsonl`, `test.jsonl`.
+- Karantina sonrası geçici SFT çıktıları: `data/final/sft_kritik_12_ayrilmis_aday/train.jsonl`, `val.jsonl`, `test.jsonl`.
+- Ayrı tutulan 12 kayıt: `data/final/sft_kritik_12_ayrilmis_aday/kritik_12_karantina.jsonl`.
+- Teknik raporlar: `reports/instruction/SFT_DONUSUM_KONTROL_RAPORU.md`, `reports/instruction/KRITIK_12_AYIRMA_KONTROL_RAPORU.md`.
+
+SFT dosyalarının şema dönüşümü 3.075/3.075 kayıt için başarılıdır. Karantina sonrası kalan 3.063 kayıt **tamamı insan tarafından doğrulanmış** kabul edilmez. Bu tablodaki 3.063 sayısı orijinal Instruction veri setinin değil, **geçici SFT adayının** büyüklüğüdür.
 
 Önceki `data/final/instruction_v1/` bölmeleri (2.448 / 326 / 301) **eski sürüm** olarak korunmaktadır; yeni sonuçları raporlarken bu eski dosyalar kullanılmamalıdır. `data/final/instruction_dataset_3075_aday.jsonl` de yeniden bölünmeden önceki tam aday dosyadır. Yeni tam aday dosyası yukarıda gösterilmiştir. Corpus için de aynı `guvenli_split_aday` klasöründeki eşlenmiş bölüm dosyaları kullanılmalıdır.
 
@@ -82,17 +98,18 @@ Bu etiketler **konu** dağılımını gösterir; tanım, açıklama, karşılaş
 
 Diğer inceleme/metaveri alanları kayda göre değişebilir. `source_document` ve `source_text` alanlarının bulunması, özgün PDF bağlantısının ve lisansının doğrulandığı anlamına gelmez.
 
-**SFT biçimi notu:** `output` alanı henüz `messages` tabanlı standart bir sohbet şemasına dönüştürülmemiştir. Model eğitiminde kullanılmadan önce soru/cevap ayrıştırma ve şema doğrulaması gerekir.
+**SFT biçimi notu:** Orijinal Instruction JSONL dosyaları `output` alanını korur. Ayrıca `scripts/12_sft_formatina_donustur.py` kullanılarak 3.075 soru–cevabın tamamı ayrıştırılmış ve `messages` sohbet biçiminde `data/final/sft_aday/` dizinine yazılmıştır. `scripts/14_kritik_12_ayir.py` ile şüpheli 12 kayıt ayrı tutularak `data/final/sft_kritik_12_ayrilmis_aday/` içinde 3.063 kayıtlık **geçici** eğitim adayı oluşturulmuştur. Format dönüşümü cevapların doğruluğunu garanti etmez.
 
 ## 5. Üretim ve kalite kontrol
 
 1. Siber güvenlik pasajlarından soru–cevap örnekleri üretildi. Örneklerin önemli bir bölümünde `generation_model` alanında `Qwen2.5-3B-Instruct` bulunur; bazı kayıtlarda bu alan boş veya eksik olabilir.
 2. Kural kontrolleri ve model temelli kaynak uyumu taraması uygulandı. Mevcut 3.075 aday kaydın tamamında `review_status: MODEL_PASS` vardır. **Bu, insan/uzman onayı değildir.**
 3. Öncelikli 28 kayıt incelemesinde **4 kayıt korundu, 11 kayıt düzeltildi, 13 kayıt çıkarıldı**. Çıkarılan 13 kayıt 3.075 adayın içinde değildir.
-4. Ayrıca 60 kayıtlık bir kalite örneklemi değerlendirildi. Bu incelemeler tüm veri setinin eksiksiz manuel doğrulandığı anlamına gelmez.
-5. 3.075 kaydın tamamında `verified: false` korunmuştur. Bölme değişikliği anlamsal kaliteyi yükseltmiş veya düşürmüş olarak yorumlanmamalıdır; yalnızca verilerin hangi bölümde tutulduğunu değiştirir.
+4. Ayrıca 60 kayıtlık daha eski bir kalite örneklemi değerlendirildi.
+5. Yeni kontrolde **12 konu × 15 soru = 180 soru** (train 120, validation 36, test 24; 179 farklı kaynak) için model destekli ön inceleme hazırlandı. Bu çalışmada **12 ciddi hata adayı** tespit edilip ana adaydan silinmeden ayrı dosyaya alındı. **18 soru için düzeltme önerisi** üretildi; bunlar henüz ana veri setine uygulanmadı. Diğer konu/kapsam ve kaynak uyumu bulguları da ön değerlendirme niteliğindedir.
+6. Orijinal 3.075 kayıt için `verified: false` durumu korunmaktadır. İnceleme **insan tarafından yapılmış nihai onay** anlamına gelmez. Bölme değişikliği anlamsal kaliteyi yükseltmiş veya düşürmüş olarak yorumlanmamalıdır; yalnızca verilerin hangi bölümde tutulduğunu değiştirir.
 
-İlgili dosyalar: `reports/instruction/MANUEL_KALITE_KONTROL_RAPORU.md`, `reports/instruction/qa_28_oncelikli_inceleme_raporu.md`, `reports/instruction/qa_28_elle_inceleme_kararlari.jsonl` ve `reports/instruction/qa_13_teknik_kapsam_disi.jsonl`.
+İlgili dosyalar: `reports/instruction/MANUEL_KALITE_KONTROL_RAPORU.md`, `reports/instruction/QA_KALITE_INCELEME_ORNEKLEMI_180.csv`, `reports/instruction/QA_MODEL_ON_INCELEME_180.csv`, `reports/instruction/QA_KALITE_ON_RAPORU_180.md`, `reports/instruction/QA_18_DUZELTME_ONERILERI.csv`, `reports/instruction/KRITIK_12_AYIRMA_KONTROL_RAPORU.md`, `reports/instruction/qa_28_oncelikli_inceleme_raporu.md` ve `reports/instruction/qa_13_teknik_kapsam_disi.jsonl`.
 
 ## 6. Yakın tekrar, yeniden bölümleme ve teknik doğrulama
 
@@ -125,7 +142,7 @@ Corpus üzerinde gerçekleştirilen yakın tekrar taramasında **63 olası benze
 - **Kaynak ve lisans:** Kaynak URL'leri, telif/lisans bilgileri ve yeniden dağıtım izinleri kaynak bazında tamamlanmadı.
 - **Yakın tekrar:** Farklı eşikler, anlamsal benzerlik ve farklı isimli kaynak kopyaları için ek denetim gerekebilir.
 - **Veri üretimi:** Bazı üretim metaverisi alanları eksik; işlem hattının uçtan uca yeniden üretilebilirliği ayrıca sınanmalıdır.
-- **SFT formatı:** Eğitim şeması dönüşümü henüz yapılmadı.
+- **SFT kalite kararı:** `messages` formatına dönüşüm tamamlandı; 3.063 kayıtlık geçici aday için insan doğrulaması ve önerilen düzeltmelerin değerlendirilmesi henüz tamamlanmadı.
 
 ## 8. Paylaşım ve etik kullanım
 
@@ -137,9 +154,10 @@ Siber güvenlik içerikleri yanlış veya kötü amaçlı kullanıma açık tekn
 
 - `README.md` — proje tanımı ve dizin yapısı.
 - `DATASET_CARD.md` — Domain Corpus veri kartı.
-- `reports/VERI_SETI_ISTATISTIK_RAPORU.md` — genel istatistikler (eski bölme sayılarını içeriyorsa güncellenmelidir).
+- `reports/VERI_SETI_ISTATISTIK_RAPORU_GUNCEL.md` — güncel genel istatistikler.
 - `reports/instruction/` — soru–cevap kalite incelemeleri.
 - `reports/corpus/` — yakın tekrar ve yeniden bölme doğrulama raporları.
-- `data/final/guvenli_split_aday/` — teknik kontrolden geçmiş **güncel aday bölmeler**.
+- `data/final/guvenli_split_aday/` — teknik kontrolden geçmiş **3.075 kayıtlık orijinal aday bölmeler**.
+- `data/final/sft_kritik_12_ayrilmis_aday/` — **3.063 kayıtlık geçici SFT adayı** ve 12 kayıtlık karantina.
 
 **Sürüm notu:** `v1.0 adayı` tam manuel olarak onaylanmış veya lisans denetimi bitmiş nihai sürüm anlamına gelmez.
