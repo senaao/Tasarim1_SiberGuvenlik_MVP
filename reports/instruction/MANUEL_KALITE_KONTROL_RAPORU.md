@@ -1,29 +1,47 @@
-# Instruction Dataset — Kayıt Bazlı Kalite Kontrol Raporu
+# Instruction Dataset — Kaynak Temelli Ön Kalite Kontrol Raporu
 
 **Tarih:** 9 Kasım 2026  
 **Proje:** Siber güvenlik domain corpus ve instruction QA veri seti  
-**Aşama:** v1.0 adayı, örneklem incelemesi yapılmış; **nihai bağımsız insan/uzman onayı tamamlanmamış**  
-**İlgili veri seti:** `data/final/instruction_dataset_3075_aday.jsonl` (3.075 kayıt)
+**Aşama:** v1.0 adayı, kaynak pasajlarına göre örneklem bazlı ön inceleme yapılmış; **bağımsız insan/alan uzmanı onayı tamamlanmamış**  
+**Güncel veri seti:** `data/final/guvenli_split_aday/instruction_dataset_3075_resplit_aday.jsonl` (3.075 kayıt)  
+**Önceki sürüm (yedek):** `data/final/instruction_dataset_3075_aday.jsonl`
+
+> **Terminoloji notu:** Projede bu dosyanın adı `MANUEL_KALITE_KONTROL_RAPORU.md` olarak korunmuştur. Buradaki 88 kayıt-bazlı karar, kaynak pasajına dayalı **model destekli ön inceleme** izidir; 88 soruya bir insan uzman tarafından bağımsız onay verildiği anlamına gelmez.
 
 ## 1. Yöntem ve kapsam
 
-- İncelemeler, soru, cevap ve beraberindeki `source_text` pasajının kayıt bazında karşılaştırılmasına dayanır. Esas PDF ile birebir karşılaştırma veya bağımsız dış kaynak doğrulaması yapılmamıştır.
+- Ön incelemeler, soru, cevap ve beraberindeki `source_text` pasajının kayıt bazında karşılaştırılmasına dayanır. Esas PDF ile birebir karşılaştırma veya bağımsız dış kaynak doğrulaması yapılmamıştır.
 - **60 örneklik, 12 konuya eşit dağıtılmış** kaynak-temelli inceleme önceki **3.155 adaylı** aşamadan yapılmıştır. Bu örneklem rastgele tüm veri setini temsil etmez ve sonuçları hata oranı olarak genellenemez.
 - **28 öncelikli kayıt** ayrı bir turda tek tek incelenmiş; korunma, yeniden yazma veya kapsam dışına çıkarma kararları verilmiştir.
-- İki listedeki kayıt kimlikleri çakışmaz: **88 farklı soru** için kayıt bazında bir değerlendirme izi vardır. Bu incelemeler, son aşamada bir alan uzmanının elle onay vermesiyle eşdeğer tutulmamalıdır.
+- İki listedeki kayıt kimlikleri çakışmaz: **88 farklı soru** için kayıt bazında değerlendirme izi vardır. Kararlar kaynak pasajları üzerinden oluşturulmuş model destekli ön değerlendirmelerdir; son aşamada bir alan uzmanının elle onay vermesiyle eşdeğer tutulamaz.
 - Ayrı olarak yürütülen model/Qwen kontrolleri insan doğrulaması sayılmaz. Final adayında `verified` alanı **3.075 kaydın tamamında `false`** durumundadır.
 
 ## 2. Ölçülen sonuçlar
 
-| İnceleme turu | İncelenen | Aynen korunan | Düzeltme önerilen / uygulanan | Çıkarılan |
-|---|---:|---:|---:|---:|
-| 60 örnek (eski aday aşaması) | 60 | 27 | 20 öneri; yeni adaydan çıkarıldı | 13 |
-| 28 öncelikli kayıt | 28 | 4 | 11 kaynakla yeniden yazıldı | 13 |
-| **Toplam** | **88** | **31** | **31** | **26** |
+| İnceleme turu | İncelenen | Korunan | Düzeltme önerisi (güncel adaya alınmadı) | Yeniden yazılan (güncel adayda) | Çıkarılan |
+|---|---:|---:|---:|---:|---:|
+| 60 örnek (önceki aday aşaması) | 60 | 27 | 20 | 0 | 13 |
+| 28 öncelikli kayıt | 28 | 4 | 0 | 11 | 13 |
+| **Toplam** | **88** | **31** | **20** | **11** | **26** |
+
+Bu dört karar grubu toplamda 88 kaydı kapsar. **Düzeltme önerilen 20 kayıt bu adayda düzeltilmiş olarak bulunmaz; veri setinden çıkarılmıştır.** Yeniden yazılan 11 kayıt ise ayrı 28’lik inceleme turuna aittir.
 
 **Güncel 3.075 kayıtta izlenen durum:** Önceki incelemelerde uygun bulunan **27** kayıt + öncelikli turda korunan **4** ve yeniden yazılan **11** kayıt = **42 kayıt** güncel adayın içindedir. Diğer **46 kayıt** (60 turundan 20 düzeltme önerisi ve 13 çıkarma; 28 turundan 13 çıkarma) bu adayın içinde değildir. Bunlar kayıt kimlikleri üzerinden karşılaştırılarak teyit edilmiştir.
 
 **Önemli yorum:** 42 kayıt için de `verified: false` olarak kalmıştır. Bunlar "inceleme izi olan" kayıtlardır, "insan tarafından kesin onaylanmış" kayıtlar değildir. Mevcut 3.075 kaydın **3.033’ü** bu iki kayıt-bazlı kontrol turu kapsamında tek tek ele alınmamıştır.
+
+### Güncel train/validation/test bölmeleri ve teknik kontrol
+
+| Bölüm | QA kayıt sayısı |
+|---|---:|
+| Train | 2.418 |
+| Validation | 359 |
+| Test | 298 |
+| **Toplam** | **3.075** |
+
+Yeni bölmeler `data/final/guvenli_split_aday/instruction/` klasöründedir. Corpus ile birlikte yapılan kaynak-gruplu yeniden bölmede **8 kaynağın konumu değiştirildi; 64 QA kaydı başka bölmeye geçti; hiçbir QA kaydı kaybolmadı.** Tespit edilmiş 63 benzer Corpus çifti içindeki **20 bölmeler arası eşleşme yeni adayda 0’a indi**.
+
+`scripts/10_validate_resplit.py` ile yürütülen bağımsız **teknik** kontrolde ID bütünlüğü, kayıt sayıları, bölme dosyaları ve Corpus–Instruction kaynak eşleşmesi başarılı bulundu. Bu denetim, yanıtların anlamsal doğruluğunu veya tüm olası yakın tekrarları doğrulamaz. Dayanak: `reports/corpus/GUvenli_split_on_raporu.md` ve `reports/corpus/YENI_SPLIT_DOGRULAMA_RAPORU.txt`.
 
 ## 3. 60 örneklem turunda konu bazlı sonuçlar
 
@@ -46,7 +64,7 @@
 
 ## 4. 60 örneklemin kayıt bazlı denetim izi
 
-Bu bölümde kararlar, eski 3.155 kayıtlı aşamaya ilişkin değerlendirme dosyasından aktarılmıştır. `DÜZELT` kayıtları güncel adayda bırakılmadı; dolayısıyla bir düzeltmenin uygulandığı ima edilmemelidir.
+Bu bölümde model destekli kaynak-temelli kararlar, eski 3.155 kayıtlı aşamaya ilişkin değerlendirme dosyasından aktarılmıştır. `DÜZELT` kayıtları güncel adayda bırakılmadı; dolayısıyla bir düzeltmenin uygulandığı ima edilmemelidir.
 
 | ID | Konu | Karar | Güncel 3.075 içinde? | Gerekçe |
 |---|---|---|---|---|
@@ -113,7 +131,7 @@ Bu bölümde kararlar, eski 3.155 kayıtlı aşamaya ilişkin değerlendirme dos
 
 ## 5. 28 öncelikli kaydın denetim izi
 
-Bu turda **4 kayıt korundu, 11 kayıt kaynak metne dayanarak yeniden yazıldı, 13 kayıt teknik soru-cevap kapsamından çıkarıldı**. Yeniden yazılan 11 kaydın önceki cevabı geçmiş/sürüm kayıtlarında korunmuştur; nihai veri setinin bu değişiklikleri barındırdığı `id` eşleşmesiyle kontrol edilmiştir.
+Bu turda **4 kayıt korundu, 11 kayıt sağlanan kaynak pasajına dayanarak yeniden yazıldı, 13 kayıt teknik soru-cevap kapsamından çıkarıldı**. Yeniden yazılan 11 kaydın önceki cevabı geçmiş/sürüm kayıtlarında korunmuştur; nihai veri setinin bu değişiklikleri barındırdığı `id` eşleşmesiyle kontrol edilmiştir.
 
 | ID | Karar | Güncel 3.075 içinde? | Gerekçe |
 |---|---|---|---|
@@ -146,28 +164,28 @@ Bu turda **4 kayıt korundu, 11 kayıt kaynak metne dayanarak yeniden yazıldı,
 | `extra_20261108_1344` | `REWRITE_QA_FROM_SOURCE` | Evet | Kesilmiş saldırı adımları yerine kaynakta açıklanan mekanizma özetlendi. |
 | `extra_20261108_5607` | `REWRITE_QA_FROM_SOURCE` | Evet | Kaynağın doğrudan desteklemediği erişim yetkisi aşımı iddiası çıkarıldı. |
 
-## 6. Manuel onayın tamamlanması için işlem planı
+## 6. Bağımsız insan kontrolünün tamamlanması için işlem planı
 
-1. **Kayıt örneklemesini genişlet:** En az 150–200 QA kaydını, her konu ve train/val/test bölümlerini temsil edecek şekilde bir kişi tarafından yeniden değerlendir. Öncelik: bugüne kadar tek tek incelenmemiş kayıtlar, Digital Forensics ve DevSecOps gibi düşük başarı gösteren konular.
+1. **Kayıt örneklemesini genişlet:** Hedeflenen toplam 150–200 QA kaydını, her konu ve train/val/test bölümlerini temsil edecek şekilde bir insan tarafından ayrıca değerlendir. Bu hedef mevcut 88 model destekli kayıt incelemesinin tamamlandığı anlamına gelmez. Öncelik: bugüne kadar tek tek incelenmemiş kayıtlar, Digital Forensics ve DevSecOps gibi düşük başarı gösteren konular.
 2. **Kontrol ölçütlerini kayıtla:** (a) sorunun teknik ve anlaşılır olması; (b) yanıtın kaynakta desteklenmesi; (c) doğru/eksiksiz cevap; (d) uygun konu etiketi; (e) kopya ve aşırı yüzeysel soru olmaması; (f) zamana bağlı iddialarda yıl/sürüm belirtilmesi; (g) güvenli/etik bağlam.
 3. **Kararı görünür kıl:** `UYGUN`, `DUZELT`, `CIKAR` kararına ek olarak gerekçe, kontrol eden, tarih, kaynak pasajı veya sayfa referansı ve varsa düzeltilmiş yanıtı kaydet. Bağımsız insan kontrolü yapılan kayıtlarda `verified` alanını ancak gerçekten onaylandığında `true` yap.
-4. **Düzeltmeleri veri setine uygula:** İnceleme sonuçları değişirse train/val/test dosyalarını aynı belge-bazlı split mantığıyla yeniden üret ve sayıları yeniden raporla; mevcut 2.448/326/301 dağılımını otomatik olarak güncel kabul etme.
-5. **Corpus kontrolünü ayrı tamamla:** 9.554 chunk içindeki 246 otomatik işaretli kaydı ve 65 yakın-benzerlik çiftini gözden geçir; corpus için 100–200 parçalık bağımsız örneklem kontrolü henüz tamamlanmamıştır.
+4. **Düzeltmeleri veri setine uygula:** İnceleme sonuçları değişirse train/val/test dosyalarını aynı belge-bazlı split mantığıyla yeniden üret ve sayıları yeniden raporla; mevcut 2.418/359/298 dağılımını otomatik olarak güncel kabul etme.
+5. **Corpus kontrolünü ayrı tamamla:** 9.554 parça içindeki 246 otomatik işaretli kaydı ve ilk taramada bulunan 65 yakın-benzerlik adayını gözden geçir. Daha sonraki ayrı taramada bulunan 63 aday çift için bölmeler arası eşleşmeler giderilmiş olsa da bunların hepsinin içerik bazında insan tarafından değerlendirilmesi tamamlanmamıştır. Corpus için 100–200 parçalık bağımsız örneklem kontrolü de henüz tamamlanmamıştır.
 
 ## 7. Sınırlılıklar
 
 - 60’lık örneklem her konudan beş kayıt seçildiğinden rastgele-temsili bir örneklem değildir. 27/60 uygun oranı genel veri setinin başarı oranı olarak sunulamaz.
 - Kaynak pasajı bir PDF veya makaleden eksik/bozuk çıkarılmış olabilir. Dış kaynak doğrulaması, güncel teknik standart doğrulaması ve telif/lisans incelemesi bu denetimin kapsamında değildir.
 - Güncel 3.075 QA kaydının tamamı kaynak metinle tek tek bağımsız doğrulanmamıştır; model inceleme etiketleri yalnızca ön-elemedir.
-- Corpus ve QA için alan dışı tekrarlar, benzer belgeler arasındaki sızıntı, görev türü etiketleri ve gerçek tokenizer istatistikleri ayrı iş kalemleridir.
+- Corpus ve QA için tespit edilmemiş olası tekrarlar veya çapraz-bölme sızıntısı, görev türü etiketleri ve gerçek tokenizer istatistikleri ayrı iş kalemleridir.
 
 ## 8. Dayanak dosyalar
 
 - `reports/instruction/qa_28_oncelikli_inceleme_raporu.md` — 28 kayıt için karar ve gerekçeler.
-- `reports/instruction/qa_28_elle_inceleme_kararlari.jsonl` — 28 kayıt için makine-okunur inceleme listesi.
-- `reports/instruction/qa_13_teknik_kapsam_disi.jsonl` — öncelikli turdaki 13 kapsam dışı kayıt.
+- `reports/instruction/qa_28_elle_inceleme_kararlari.jsonl` — 28 kayıt için makine-okunur inceleme listesi (yerel projede; `.jsonl` dosyaları GitHub’a gönderilmiyor).
+- `reports/instruction/qa_13_teknik_kapsam_disi.jsonl` — öncelikli turdaki 13 kapsam dışı kayıt (yerel projede; GitHub’a gönderilmiyor).
 - `kalite_orneklem_60_degerlendirme.jsonl` ve `kalite_orneklem_60_rapor.md` — bu raporun hazırlanmasında kullanılan, mevcut projeye henüz kopyalandığı doğrulanmamış önceki inceleme kayıtları.
-- `data/final/instruction_dataset_3075_aday.jsonl` — güncel QA adayı.
-- `reports/VERI_SETI_ISTATISTIK_RAPORU.md` — corpus/QA sayısal ölçüm raporu.
+- `data/final/guvenli_split_aday/instruction_dataset_3075_resplit_aday.jsonl` — güncel QA adayı (GitHub’a gönderilmiyor).
+- `reports/VERI_SETI_ISTATISTIK_RAPORU_GUNCEL.md` — corpus/QA sayısal ölçüm raporu (GitHub’a eklenen mevcut dosya adı).
 
-**Sonuç:** Teknik QA üretimi ve iki ayrı turdaki kaynak-temelli ön denetim belgelenmiştir. Ancak **nihai manuel kalite güvencesi henüz tamamlanmamıştır**; bu nedenle dosyalar hâlen *aday* olarak etiketlenmelidir.
+**Sonuç:** Teknik QA üretimi ve iki ayrı turdaki model destekli kaynak-temelli ön inceleme belgelenmiştir. Ancak **bağımsız insan/alan uzmanı onayı tamamlanmamıştır**; bu nedenle dosyalar hâlen *aday* olarak etiketlenmelidir.

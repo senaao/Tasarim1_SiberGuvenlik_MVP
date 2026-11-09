@@ -1,0 +1,5 @@
+Kaynak Adı,Tür,İçerik Açıklaması,Lisans / Erişim Koşulları,Dosya Yolu
+NVD API,API / JSON,"Güncel CVE (Common Vulnerabilities and Exposures - Ortak Zafiyetler ve Etkilenmeler) zafiyet kayıtları ve CVSS (Common Vulnerability Scoring System - Ortak Zafiyet Puanlama Sistemi) skorları",Public Domain / NIST Açık Veri,data/raw/nvd_1000_raw.json
+NIST SP 800 Serisi,PDF / Doküman,Sistem sıkılaştırma ve güvenlik kılavuzları,Public Domain (US Government),data/raw/security_guides_raw.json
+OWASP Top 10,Web / Doküman,Web uygulaması kritik zafiyetleri ve mitigasyonlar,CC BY-SA 4.0,data/raw/security_guides_raw.json
+Türkçe SFT Talimat Seti,JSONL,Uzman siber güvenlik üslubu için sentetik soru-cevaplar,Özel / Akademik Çalışma,data/raw/sft_instructions_raw.jsonl

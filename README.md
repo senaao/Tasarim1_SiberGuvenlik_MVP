@@ -1,106 +1,260 @@
 # Siber Güvenlik Domain Corpus ve Instruction Dataset
 
-**Proje türü:** Bilgisayar Mühendisliği — Tasarım/Bitirme Projesi veri hazırlama çalışması  
-**Alan:** Siber güvenlik  
-**Durum (9 Kasım 2026):** v1.0 için **aday** veri setleri ve ön kalite kontrol. Tam doğrulama henüz tamamlanmamıştır.
+**Proje:** Tasarım 1 — Siber Güvenlik Veri Hazırlama Çalışması  
+**Son güncelleme:** 9 Kasım 2026  
+**Durum:** Teknik kontrolleri yapılmış v1.0 adayları; nihai içerik ve lisans doğrulaması tamamlanmadı.
 
-## Projenin amacı
+## 1. Projenin Amacı
 
-Siber güvenlik alanında teknik dokümanlardan elde edilen metinlerle bir **Domain Corpus** hazırlamak ve kaynak pasajlarıyla ilişkilendirilebilen soru-cevap örneklerinden bir **Instruction Dataset** oluşturmak. Veri setleri sonraki aşamalarda alan uyarlaması, instruction fine-tuning ve değerlendirme çalışmalarına temel oluşturmak üzere tasarlanmıştır. Bu repo aşamasında model eğitildiği veya bir RAG uygulamasının tamamlandığı iddia edilmemektedir.
+Bu çalışmada teknik siber güvenlik belgelerinden bir **Domain Corpus** (metin parçaları) ve kaynak pasajlarıyla ilişkilendirilmiş bir **Instruction Dataset** (soru-cevap kayıtları) hazırlanmıştır.
 
-## Veri setlerinin mevcut durumu
+Hedef, sonraki aşamalarda bilgi erişimi, alan uyarlaması ve instruction fine-tuning gibi deneylere veri temeli oluşturmaktır.
 
-| Bileşen | Mevcut içerik | Durum |
-|---|---:|---|
-| Domain Corpus | 9.554 metin parçası (chunk), 731 kaynak belge | Otomatik ön denetim yapıldı; manuel kontrol sürüyor |
-| Instruction Dataset | 3.075 soru-cevap adayı, 562 kaynak belge | Kural/model taraması ve sınırlı kaynak kontrolü yapıldı; tamamı insan tarafından doğrulanmadı |
-| Corpus train/val/test | 7.643 / 1.059 / 852 chunk | Yeni kaynak-gruplu ayrım, teknik kontrol başarılı |
-| Instruction train/val/test | 2.418 / 359 / 298 örnek | Yeni kaynak-gruplu ayrım, teknik kontrol başarılı |
-Güncel veri ayrımı `data/final/guvenli_split_aday/` klasöründedir.
+**Bu aşamada bir dil modelinin eğitildiği, RAG uygulamasının tamamlandığı veya model performansının ölçüldüğü iddia edilmemektedir.**
 
-Yakın tekrar incelemesinde 63 aday metin çifti tespit edilmiştir.
-Bunlardan farklı train/validation/test bölmelerinde bulunan 20 çift,
-kaynak-gruplu yeniden bölümleme sonrasında 0'a indirilmiştir.
+## 2. Veri Setlerinin Güncel Durumu
 
-Toplam 9.554 Corpus parçası ve 3.075 soru-cevap korunmuştur.
-Yeni bölümleme bağımsız teknik doğrulamadan geçmiştir.
-Eski bölmeler yedek olarak saklanmaktadır.
+| Veri seti | Toplam kayıt | Farklı kaynak belge | Train | Validation | Test |
+|---|---:|---:|---:|---:|---:|
+| Domain Corpus | 9.554 metin parçası | 731 | 7.643 | 1.059 | 852 |
+| Instruction Dataset | 3.075 soru-cevap | 562 | 2.418 | 359 | 298 |
 
-Bu sonuç, tespit edilmemiş tüm veri benzerliklerinin
-giderildiği anlamına gelmez.
-Instruction ve Corpus splitleri 
-**kaynak belge düzeyinde hizalanmıştır**; aynı kaynak belge iki farklı kümeye yerleştirilmemiştir. Bununla birlikte farklı adlarla kaydedilmiş benzer belgeler/örnekler için ek kontrol gereklidir.
+Güncel veri bölmeleri `data/final/guvenli_split_aday/` klasöründedir.
 
-## Dizin yapısı
+Önceki bölmeler karşılaştırma ve geri dönüş amacıyla yerelde saklanmaktadır.
+
+Yeni ayrımın kayıt sayıları, benzersiz kimlikleri, kaynak eşleşmeleri ve dosya bütünlüğü bağımsız teknik kontrolden geçmiştir.
+
+Bu kontroller, içeriklerin tamamının bir insan veya alan uzmanı tarafından doğrulandığı anlamına gelmez. Instruction kayıtlarındaki `verified: false` durumu bu sınırlamayı yansıtır.
+
+## 3. Kapsam ve Veri Biçimi
+
+Veri setleri aşağıdaki teknik siber güvenlik konularını kapsamaktadır:
+
+- Ağ ve sistem güvenliği
+- Kimlik doğrulama
+- Web ve mobil güvenlik
+- Bulut güvenliği
+- DevSecOps
+- Zararlı yazılım analizi
+- Kriptografi
+- Dijital adli bilişim
+- Olay müdahalesi
+- Sızma testi
+
+**Domain Corpus:** JSONL biçiminde `text`, kayıt kimliği, kaynak belge ve bölüm bilgileri içerir.
+
+**Instruction Dataset:** JSONL biçiminde `id`, `source_document`, `topic`, `source_text`, `output` ve değerlendirme metaverilerini içerir.
+
+Instruction dosyasında soru ile cevap `output` alanında birlikte tutulmaktadır. Standart sohbet veya SFT eğitim şemasına dönüşüm henüz tamamlanmamıştır.
+
+`topic` alanı konu etiketidir. Açıklama, karşılaştırma veya akıl yürütme gibi görev türlerinin doğrulanmış dağılımı henüz çıkarılmamıştır.
+
+Kaynak dosya adları mevcut olmakla birlikte 731 kaynağın tamamı için özgün URL, lisans ve yeniden dağıtım izni doğrulanmamıştır.
+
+## 4. Proje Klasör Yapısı
+
+Aşağıdaki yapı yerel çalışma bilgisayarındaki temel dosyaları göstermektedir.
 
 ```text
-Tasarim1_SiberGuvenlik/
+Tasarim1_SiberGuvenlik_MVP/
+├── README.md
+├── DATASET_CARD.md
+├── INSTRUCTION_CARD.md
+├── requirements.txt
+├── .gitignore
+│
+├── scripts/
+│   ├── find_near_duplicates.py
+│   ├── prepare_corpus.py
+│   ├── 08_validate_datasets.py
+│   ├── 09_resplit_near_duplicates.py
+│   └── 10_validate_resplit.py
+│
+├── reports/
+│   ├── VERI_SETI_ISTATISTIK_RAPORU_GUNCEL.md
+│   ├── corpus/
+│   │   ├── CORPUS_KALITE_RAPORU.md
+│   │   ├── NEAR_DUPLICATE_INCELEME_RAPORU.md
+│   │   ├── GUvenli_split_on_raporu.md
+│   │   └── YENI_SPLIT_DOGRULAMA_RAPORU.txt
+│   └── instruction/
+│       └── MANUEL_KALITE_KONTROL_RAPORU.md
+│
 ├── data/
-│   ├── raw/                    # İlk indirilen veri
-│   ├── extracted/              # PDF'den çıkarılmış metin
-│   ├── cleaned_v2/             # Temizleme aşaması
+│   ├── raw/
+│   ├── extracted/
+│   ├── cleaned_v2/
 │   └── final/
 │       ├── domain_corpus_v1_aday.jsonl
 │       ├── instruction_dataset_3075_aday.jsonl
-│       └── instruction_v1/
-│           ├── train.jsonl
-│           ├── val.jsonl
-│           └── test.jsonl
-├── scripts/                     # Mevcut veri işleme betikleri
-├── reports/
-│   ├── corpus/                 # Domain Corpus kalite raporu
-│   └── instruction/            # Soru-cevap kalite inceleme raporları
+│       ├── corpus_v1/
+│       ├── instruction_v1/
+│       └── guvenli_split_aday/
+│           ├── domain_corpus_v1_resplit_aday.jsonl
+│           ├── instruction_dataset_3075_resplit_aday.jsonl
+│           ├── source_resplit_manifest.csv
+│           ├── corpus/
+│           └── instruction/
+│
 └── corpus_kontrol_paketi/
-    ├── scripts/                 # Corpus ön denetim ve hazırlama betikleri
-    ├── output/                  # Corpus adayları, envanter ve split çıktıları
-    ├── reports/
-    └── splits/
 ```
 
-> **Not:** `data/final/` altında önceki denemelerden kalan `corpus.jsonl`, `corpus_v2.jsonl`, `train.jsonl`, `val.jsonl` ve `test.jsonl` gibi ek dosyalar bulunabilir. Bunlar `instruction_v1/` içindeki yeni soru-cevap splitleriyle karıştırılmamalıdır. Eski veriler değerlendirilmeden silinmemelidir.
+Bu ağaç temel dosyaları özetler. `scripts` ve `reports` altında başka dosyalar da bulunmaktadır.
 
-## Alan kapsamı ve veri yapısı
+**Önemli:** `data/` ve `corpus_kontrol_paketi/` klasörleri `.gitignore` ile GitHub dışında tutulmaktadır. GitHub deposunu klonlamak veri setlerini otomatik olarak indirmez.
 
-Malware ve zararlı yazılım analizi, dijital adli bilişim, bulut güvenliği, DevSecOps, ağ ve sistem güvenliği, kimlik doğrulama, kriptografi, mobil/web güvenliği, olay müdahalesi ve sızma testi gibi teknik konular yer alır. Kaynaklar teknik PDF/doküman metinleri ve daha önce toplanmış siber güvenlik kayıtlarından oluşur; her kaynağın URL ve lisansı henüz bütünüyle doğrulanmış değildir.
+## 5. Gerçekleştirilen Teknik Kontroller
 
-- **Corpus (JSONL):** Metin (`text`), belge ilişkisi (`source_document`/`document_id`), kayıt kimliği ve kalite/split meta verileri içerir.
-- **Instruction (JSONL):** `id`, `source_document`, `topic`, `source_text`, `output` ve inceleme durumu alanlarını içerir. Mevcut `output` alanındaki soru-cevap biçimi, ileride kullanılacak SFT şemasına göre ayrıca dönüştürülüp test edilmelidir.
-- **Bölme ilkesi:** Aynı `source_document` üzerinden üretilen kayıtlar aynı splitte tutulur; corpus ve instruction ayrımları birbiriyle uyumludur.
+### 5.1. JSONL ve Kimlik Kontrolü
 
-## Ön kalite kontrol sonuçları
+Domain Corpus ve Instruction Dataset için:
 
-- Domain Corpus için **birebir aynı metin: 0**; **en az bir kalite uyarısı taşıyan chunk: 246**.
-- TF-IDF taramasında benzerlik eşiği 0,83 veya üzeri olan **65 çift** aday olarak tespit edildi; bunlar kesin tekrar sayılmamış ve otomatik silinmemiştir.
-- Instruction tarafında **28 yüksek öncelikli kayıt** kaynak pasajıyla incelendi: **4 korundu, 11 yeniden yazıldı, 13 çıkarıldı**. Ek bir 60'lık örneklem için değerlendirme raporu ayrıca mevcuttur; bu incelemeler tüm 3.075 örneğin onaylandığı anlamına gelmez.
-- `verified: false` işaretli kayıtların doğrulanmış kabul edilmemesi gerekir.
+- Toplam kayıt sayıları kontrol edildi.
+- Train, validation ve test dosyaları doğrulandı.
+- Benzersiz kayıt kimliklerinin korunduğu kontrol edildi.
+- Corpus ve Instruction kaynak eşleşmeleri doğrulandı.
 
-Ayrıntılar: `reports/corpus/` ve `reports/instruction/`.
+### 5.2. Veri Tekrarlarının İncelenmesi
 
-## Yeniden üretilebilirlik
+Corpus ön kontrolünde:
 
-Corpus ön hazırlama paketindeki iki betik, mevcut girdi ve QA split manifesti kullanılarak tekrar çalıştırılabilir:
+- Birebir aynı metin kaydı bulunmadı.
+- 246 metin parçası en az bir otomatik kalite uyarısı aldı.
 
-```bash
-pip install -r corpus_kontrol_paketi/requirements.txt
-python corpus_kontrol_paketi/scripts/find_near_duplicates.py --input domain_corpus_taslak_v2.jsonl --output near_pairs.csv
-python corpus_kontrol_paketi/scripts/prepare_corpus.py --input domain_corpus_taslak_v2.jsonl --qa-manifest corpus_kontrol_paketi/splits/split_manifest.csv --near-pairs near_pairs.csv --out prepared_corpus
+TF-IDF tabanlı yakın tekrar incelemeleri gerçekleştirildi.
+
+İlk taramada belirli eşiklerde 65 ve 16 aday çift raporlandı. Sonraki taramada ise 63 benzer metin çifti adayı belirlendi.
+
+Bu sonuçlar farklı taramalara aittir ve aynı liste olarak değerlendirilmemelidir.
+
+### 5.3. Veri Sızıntısı Riskinin Azaltılması
+
+Sonraki taramada belirlenen 63 benzer metin çiftinin 20'si önceki train/validation/test bölmeleri arasında bulunuyordu.
+
+Bu nedenle bağlantılı kaynak belgeleri aynı bölümde tutan yeni bir ayrım oluşturuldu.
+
+Bu işlemde:
+
+- 8 kaynak belgenin bölümü değiştirildi.
+- 199 Domain Corpus parçası yeniden bölümlendirildi.
+- 64 Instruction sorusu yeniden bölümlendirildi.
+- Toplam 9.554 Corpus kaydı korundu.
+- Toplam 3.075 soru-cevap kaydı korundu.
+- Metin içerikleri değiştirilmedi.
+
+**Tespit edilen 63 çift arasında bölmeler arası kalan benzerlik sayısı 0'a düşürüldü.**
+
+Bu sonuç bütün olası veri sızıntılarının veya anlamsal tekrarların giderildiği anlamına gelmemektedir.
+
+### 5.4. Bağımsız Teknik Doğrulama
+
+Güncel veri ayrımı `scripts/10_validate_resplit.py` kullanılarak kontrol edilmiştir.
+
+Kontrolde:
+
+- Kayıt sayıları
+- Benzersiz kimlikler
+- Veri içeriklerinin korunması
+- Bölme dosyalarının ana dosyalarla uyumu
+- Kaynak bazlı bölümleme
+- Corpus–Instruction eşleşmesi
+- Tespit edilmiş benzer metin çiftlerinin bölmeler arası durumu
+
+incelenmiştir.
+
+**Sonuç: Bağımsız teknik kontrol başarılı.**
+
+İlgili rapor:
+
+`reports/corpus/YENI_SPLIT_DOGRULAMA_RAPORU.txt`
+
+## 6. Instruction Dataset Kalite Değerlendirmesi
+
+Instruction Dataset kayıtları kural tabanlı ve model destekli ön kontrollerden geçirilmiştir.
+
+Buna ek olarak:
+
+- Önceki aday aşamasında 60 soruluk kaynak-pasaj inceleme izi oluşturulmuştur.
+- Ayrı bir turda 28 öncelikli kayıt incelenmiştir.
+- Öncelikli 28 kaydın 4'ü korunmuştur.
+- 11 kayıt kaynak pasajına göre yeniden yazılmıştır.
+- 13 kayıt kapsam dışında bırakılmıştır.
+
+Bu kontroller bağımsız uzman onayı anlamına gelmez.
+
+Mevcut 3.075 sorunun tamamı kaynak metinler üzerinden tek tek bağımsız olarak doğrulanmamıştır.
+
+Kalite kontrol sonuçları ve sınırlılıklar şu dosyada açıklanmaktadır:
+
+`reports/instruction/MANUEL_KALITE_KONTROL_RAPORU.md`
+
+## 7. Kurulum ve Çalıştırma
+
+Proje Python ile geliştirilmiştir.
+
+Gerekli kütüphaneler proje ana klasöründe şu komutla kurulabilir:
+
+```powershell
+python -m pip install -r requirements.txt
 ```
 
-`domain_corpus_taslak_v2.jsonl` yukarıdaki komutta **örnek girdi dosya adıdır**; dosyanın gerçek konumuna göre yol değiştirilmelidir. Bu iki betik yalnızca *corpus ön denetim/hazırlama* işlemlerini kapsar; ilk PDF indirmelerinden itibaren uçtan uca tekrarlanabilirlik henüz belgelenip sınanmamıştır.
+Yerel veri dosyaları mevcutsa güncel veri ayrımının teknik kontrolü şu komutla yapılabilir:
 
-## Bilinen eksikler ve sonraki doğrulamalar
+```powershell
+python scripts/10_validate_resplit.py
+```
 
-1. Kaynak belge URL'leri, erişim tarihleri, lisansları ve yeniden dağıtım koşulları doğrulanmalı.
-2. Gerçek model tokenizer'ı ile token sayımı ve dağılım raporu oluşturulmalı; kelime sayısı token sayısı değildir.
-3. Corpus için rastgele 100–200, instruction için 150–200 örnek üzerinde belgeye dayalı manuel QA tamamlanmalı.
-4. Şüpheli yakın tekrarlar, PDF çıkarım artıkları, eksik cevaplar ve konu/görev türü etiketleri gözden geçirilmeli.
-5. Instruction kayıtlarının görev türleri sınıflandırılmalı; kullanılacak eğitim şemasına dönüştürülüp doğrulanmalı.
-6. Veri aşamalarını kapsayan betik, ayar, bağımlılık ve istatistik raporları tek bir yeniden üretme akışına bağlanmalı.
+Kontrol raporu:
 
-## Telif, lisans ve paylaşım
+`reports/corpus/YENI_SPLIT_DOGRULAMA_RAPORU.txt`
 
-**Kaynak dokümanların yeniden dağıtım izinleri teyit edilene kadar ham PDF'ler, tam corpus metinleri ve kaynak pasajlarını içeren tüm instruction kayıtları herkese açık GitHub deposuna yüklenmemelidir.** Depoda öncelikle kod, raporlar, şema belgeleri, kaynağı doğrulanmış küçük örnekler ve veri üretme yönergeleri paylaşılmalıdır.
+**Dikkat edilmesi gerekenler:**
 
-## İlgili belgeler
+- `08_validate_datasets.py` önceki bölümlemenin sayılarını kontrol eder.
+- `09_resplit_near_duplicates.py` yeni aday bölümleme oluşturmak için kullanılmıştır.
+- `10_validate_resplit.py` güncel aday bölümlemenin teknik kontrolü içindir.
+- Mevcut çıktıların üzerine yanlışlıkla yazmamak için bölümleme kodları çalıştırılmadan önce dosya yolları ve hedef klasörler kontrol edilmelidir.
 
-Vize teslimi için `DATASET_CARD.md` (Domain Corpus), `INSTRUCTION_CARD.md` (Instruction Dataset), kaynak envanteri, teknik istatistikler ve manuel QA raporları ayrıca hazırlanıp güncellenecektir.
+İlk PDF indirmesinden nihai JSONL dosyalarına kadar bütün işlem hattının başka bir bilgisayarda aynı sonuçları ürettiği henüz gösterilmemiştir.
+
+GitHub deposunda veri dosyaları bulunmadığı için doğrulama kodları yalnızca depoyu klonlayarak çalıştırılamaz.
+
+## 8. Henüz Tamamlanmamış Çalışmalar
+
+Aşağıdaki işlemler tamamlanmış olarak değerlendirilmemektedir:
+
+1. Kaynak URL'lerinin, erişim tarihlerinin, lisansların ve yeniden dağıtım izinlerinin doğrulanması.
+2. Corpus ve Instruction Dataset için daha kapsamlı, kaynak temelli bağımsız manuel kalite kontrolü.
+3. Otomatik işaretli 246 Corpus parçasının değerlendirilmesi.
+4. Ek benzerlik kontrollerinin yapılması.
+5. Gerçek tokenizer ile token sayımı.
+6. Dil ve görev türü dağılımlarının ölçülmesi.
+7. Instruction kayıtlarının kullanılacak eğitim formatına dönüştürülmesi.
+8. Veri hazırlama sürecinin uçtan uca yeniden üretilebilirliğinin sınanması.
+
+## 9. Lisans, Etik ve Paylaşım
+
+Kaynak belgelerin yeniden dağıtım izinleri henüz bütünüyle doğrulanmamıştır.
+
+Bu nedenle ham PDF'ler, tam Domain Corpus ve kaynak pasajlarını içeren Instruction Dataset kayıtları herkese açık GitHub deposunda paylaşılmamalıdır.
+
+GitHub deposunda öncelikle:
+
+- Veri hazırlama ve kontrol kodları
+- Veri kartları
+- İstatistik raporları
+- Kalite kontrol raporları
+- Teknik doğrulama belgeleri
+
+bulundurulmaktadır.
+
+## 10. İlgili Belgeler
+
+- `DATASET_CARD.md` — Domain Corpus'un yapısı, istatistikleri ve sınırlılıkları.
+- `INSTRUCTION_CARD.md` — Instruction Dataset'in üretimi, bölümlenmesi ve kalite durumu.
+- `reports/VERI_SETI_ISTATISTIK_RAPORU_GUNCEL.md` — Sayısal veri seti raporu.
+- `reports/corpus/` — Corpus kalite kontrolü ve yeniden bölümleme raporları.
+- `reports/instruction/` — Instruction kalite inceleme raporları.
+
+**Sürüm notu:** Bu çalışma, 9 Kasım 2026 itibarıyla teknik kontrolleri geçmiş bir veri seti adayıdır. Nihai kalite onayı, tüm lisansların doğrulandığı veya eğitilmiş bir modelin başarılı olduğu iddia edilmemektedir.

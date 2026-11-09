@@ -1,0 +1,105 @@
+VIZE - CORPUS TOKEN VE TEMIZLEME KANIT RAPORU
+
+KAYNAK JSONL: data\final\guvenli_split_aday\corpus\domain_corpus_train.jsonl; data\final\guvenli_split_aday\corpus\domain_corpus_val.jsonl; data\final\guvenli_split_aday\corpus\domain_corpus_test.jsonl
+Corpus kaydi: 9554
+Farkli kaynak belge: 731
+
+=== GERCEK TOKEN SAYIMI ===
+Tokenizer: Qwen/Qwen3-4B-Base
+Yontem: Her Corpus text alanini add_special_tokens=False ile tokenize edip toplama
+TOPLAM_TOKEN: 5,866,093
+CHUNK_DAGILIMI: {'min': 55, 'median': 573.0, 'mean': 614.0, 'p95': 948, 'max': 10712}
+DOKUMAN_DAGILIMI: {'min': 197, 'median': 3387, 'mean': 8024.8, 'p95': 31247, 'max': 131331}
+SPLIT_TOKENLERI: {'train': 4731185, 'val': 622499, 'test': 512409}
+Tokenlanan belge: 731
+
+=== GERCEK ONCE / SONRA METIN ORNEKLERI ===
+Eslesme: Ayni kaynak dosya adina sahip extracted/PDF ve cleaned_v2 metni.
+Alintilar ilgili dosyalarin baslangic kesitleridir; yer degistirmis paragraflar bire bir hizalanmis degildir.
+OLUSTURULAN_ORNEK: 12
+KONTROL_EDILEN_ESLESME: 13
+Taranan dosya anahtarlari: extracted=1231, cleaned=1230, pdf=1283
+
+ORNEK 01 - Approve What_ Exactly_ Effect Binding and Trusted Rendering.txt
+Yontem: extracted TXT -> cleaned TXT
+Once dosyasi: data\extracted\Approve What_ Exactly_ Effect Binding and Trusted Rendering.txt
+Sonra dosyasi: data\cleaned_v2\Approve What_ Exactly_ Effect Binding and Trusted Rendering.txt
+ONCE: PREPRINT Approve What, Exactly? Approve What, Exactly? Effect Binding and Trusted Rendering for Agent Step-Up Authorization Sai Varun Kodathala SportsVision AI Minnetonka, MN varun@sportsvision.ai Prashanth Pollishetty SportsVision AI Minnetonka, MN prashanth@sportsvision.ai Jaylen Cargill SportsVision AI Minnetonka, MN jaylen@sportsvision.ai Abstr...
+SONRA: Approve What, Exactly? Approve What, Exactly? Effect Binding and Trusted Rendering for Agent Step-Up Authorization Prashanth Pollishetty AI agents now pause for approval before they send money, delete files or email outsiders, and the approval, whether given by a person or by an automated approver, is usually treated as a second factor. We argue th...
+
+ORNEK 02 - SPIDES_ Information-Flow Control for Browser Agents.txt
+Yontem: extracted TXT -> cleaned TXT
+Once dosyasi: data\extracted\SPIDES_ Information-Flow Control for Browser Agents.txt
+Sonra dosyasi: data\cleaned_v2\SPIDES_ Information-Flow Control for Browser Agents.txt
+ONCE: SPIDES: INFORMATION-FLOW CONTROL FOR BROWSER AGENTS Egor Zverev∗† ISTA Juhee Kim∗ Microsoft Leon Trampert† CISPA Helmholtz Center for Information Security Boris Köpf Microsoft Aashish Kolluri Microsoft Shruti Tople Microsoft Santiago Zanella-Béguelin Microsoft ABSTRACT Browser agents automate complex workflows by reading and acting on arbitrary pag...
+SONRA: CISPA Helmholtz Center for Information Security Santiago Zanella-Béguelin Browser agents automate complex workflows by reading and acting on arbitrary page content, but this flexibility exposes them to prompt injection attacks and un- intended data exfiltration. Recent work argues that LLM-driven browser agents erode traditional web security bounda...
+
+ORNEK 03 - Google.Hacking.for.Penetration.Testers.Volume2.txt
+Yontem: extracted TXT -> cleaned TXT
+Once dosyasi: data\extracted\Google.Hacking.for.Penetration.Testers.Volume2.txt
+Sonra dosyasi: data\cleaned_v2\Google.Hacking.for.Penetration.Testers.Volume2.txt
+ONCE: w w w. s y n g re s s . c o m Syngress is committed to publishing high-quality books for IT Professionals and deliv- ering those books in media and formats that ﬁt the demands of our customers. We are also committed to extending the utility of the book you purchase via additional mate- rials available from our Web site. SOLUTIONS WEB SITE To regist...
+SONRA: w w w. s y n g re s s . c o m Syngress is committed to publishing high-quality books for IT Professionals and deliv- ering those books in media and formats that ﬁt the demands of our customers. We are also committed to extending the utility of the book you purchase via additional mate- rials available from our Web site. added features such as free ...
+
+ORNEK 04 - ENISA_Technical_implementation_guidance_on_cybersecurity_risk_management_measures_version_1.0.txt
+Yontem: extracted TXT -> cleaned TXT
+Once dosyasi: data\extracted\ENISA_Technical_implementation_guidance_on_cybersecurity_risk_management_measures_version_1.0.txt
+Sonra dosyasi: data\cleaned_v2\ENISA_Technical_implementation_guidance_on_cybersecurity_risk_management_measures_version_1.0.txt
+ONCE: EUROPEAN UNION AGENCY FOR CYBERSECURITY TECHNICAL IMPLEMENTATION GUIDANCE On Commission Implementing Regulation (EU) 2024/2690 of 17 October 2024 laying down rules for the application of NIS2 Directive as regards technical and methodological requirements of cybersecurity risk-management measures JUNE 2025, VERSION 1.0 TECHNICAL IMPLEMENTATION GUIDA...
+SONRA: On Commission Implementing Regulation (EU) 2024/2690 of 17 October 2024 laying down rules for the application of NIS2 Directive as regards technical and methodological requirements of cybersecurity risk-management measures June 2025, version 1.0 The European Union Agency for Cybersecurity, ENISA, is the Union’s agency dedicated to achieving a high ...
+
+ORNEK 05 - Black Hat Python, 2nd Edition.txt
+Yontem: extracted TXT -> cleaned TXT
+Once dosyasi: data\extracted\Black Hat Python, 2nd Edition.txt
+Sonra dosyasi: data\cleaned_v2\Black Hat Python, 2nd Edition.txt
+ONCE: CONTENTS IN DETAIL PRAISE FOR THE FIRST EDITION TITLE PAGE COPYRIGHT DEDICATION ABOUT THE AUTHORS FOREWORD PREFACE ACKNOWLEDGMENTS CHAPTER 1: SETTING UP YOUR PYTHON ENVIRONMENT Installing Kali Linux Setting Up Python 3 Installing an IDE Code Hygiene CHAPTER 2: BASIC NETWORKING TOOLS Python Networking in a Paragraph TCP Client UDP Client TCP Server ...
+SONRA: Installing Kali Linux Python Networking in a Paragraph Building a TCP Proxy Building a UDP Host Discovery Tool Packet Sniffing on Windows and Linux Decoding the IP Layer Writing the IP Decoder Stealing Email Credentials ARP Cache Poisoning with Scapy The urllib2 Library for Python 2.x The urllib Library for Python 3.x The requests Library The lxml ...
+
+ORNEK 06 - sec_2510.03610v1_PentestMCP__A_Toolkit_for_Agentic_P.txt
+Yontem: extracted TXT -> cleaned TXT
+Once dosyasi: data\extracted\sec_2510.03610v1_PentestMCP__A_Toolkit_for_Agentic_P.txt
+Sonra dosyasi: data\cleaned_v2\sec_2510.03610v1_PentestMCP__A_Toolkit_for_Agentic_P.txt
+ONCE: PentestMCP: A Toolkit for Agentic Penetration Testing Zachary Ezetta Wu-chang Feng zezetta@icloud.com wuchang@pdx.edu Portland State University Department of Computer Science Abstract Agentic AI is transforming security by automating many tasks being performed manually. While initial agentic approaches employed a monolithic architec- ture, the Mode...
+SONRA: PentestMCP: A Toolkit for Agentic Penetration Testing Portland State University Department of Computer Science Agentic AI is transforming security by automating many tasks being performed manually. While initial agentic approaches employed a monolithic architec- ture, the Model-Context-Protocol has now enabled a remote-procedure call (RPC) paradigm...
+
+ORNEK 07 - ByteMark_ A Unified Byte-Level Watermark for Detection Acros.txt
+Yontem: extracted TXT -> cleaned TXT
+Once dosyasi: data\extracted\ByteMark_ A Unified Byte-Level Watermark for Detection Acros.txt
+Sonra dosyasi: data\cleaned_v2\ByteMark_ A Unified Byte-Level Watermark for Detection Acros.txt
+ONCE: ByteMark: A Unified Byte-Level Watermark for Detection Across Language Models Xiaopu Wang xmw5221@psu.edu Runze Li rli4@psu.edu Abstract As watermarking of LLM-generated text enters deployment, users increasingly need to check text whose source is unknown. Existing detectors read the watermark through a specific tok- enizer or embedding pipeline, a...
+SONRA: ByteMark: A Unified Byte-Level Watermark for Detection Across Language Models As watermarking of LLM-generated text enters deployment, users increasingly need to check text whose source is unknown. Existing detectors read the watermark through a specific tok- enizer or embedding pipeline, and even if all providers adopted the same watermarking meth...
+
+ORNEK 08 - Provenance and Authorization in Autobiographical Language Mo.txt
+Yontem: extracted TXT -> cleaned TXT
+Once dosyasi: data\extracted\Provenance and Authorization in Autobiographical Language Mo.txt
+Sonra dosyasi: data\cleaned_v2\Provenance and Authorization in Autobiographical Language Mo.txt
+ONCE: Provenance and Authorization in Autobiographical Language Models A Security Model and Synthetic Memory Study Faruk Alpay1∗ Taylan Alpay2 1Department of Computer Engineering, Bahçeşehir University, Istanbul, Türkiye 2Department of Aerospace, University of Turkish Aeronautical Association, Ankara, Türkiye faruk.alpay@bahcesehir.edu.tr s220112602@stu....
+SONRA: Provenance and Authorization in Autobiographical Language Models A Security Model and Synthetic Memory Study 1Department of Computer Engineering, Bahçeşehir University, 2Department of Aerospace, University of Turkish Aeronautical Association, Autobiographical language models may draw on archives containing observations, quo- tations, emotional repo...
+
+ORNEK 09 - NIST.SP.800-163r1.txt
+Yontem: extracted TXT -> cleaned TXT
+Once dosyasi: data\extracted\NIST.SP.800-163r1.txt
+Sonra dosyasi: data\cleaned_v2\NIST.SP.800-163r1.txt
+ONCE: NIST Special Publication 800-163 Revision 1 Vetting the Security of Mobile Applications Michael Ogata Josh Franklin Jeffrey Voas Vincent Sritapan Stephen Quirolgico This publication is available free of charge from: https://doi.org/10.6028/NIST.SP.800-163r1 C O M P U T E R S E C U R I T Y NIST Special Publication 800-163 Revision 1 Vetting the Secu...
+SONRA: NIST Special Publication 800-163 Vetting the Security of This publication is available free of charge from: C O M P U T E R S E C U R I T Y NIST Special Publication 800-163 Vetting the Security of Software and Systems Division Office of Science and Technology Information Technology Laboratory U.S. Department of Homeland Security Applied Cybersecuri...
+
+ORNEK 10 - Communication-Efficient Private Federated Reinforcement Lear.txt
+Yontem: extracted TXT -> cleaned TXT
+Once dosyasi: data\extracted\Communication-Efficient Private Federated Reinforcement Lear.txt
+Sonra dosyasi: data\cleaned_v2\Communication-Efficient Private Federated Reinforcement Lear.txt
+ONCE: Communication-Efficient Private Federated Reinforcement Learning with Post-Quantum Authentication for Vehicular Networks Hojat Allah Salehi1,2, Devrim Aras1,2, Md Jueal Mia1,2, M. Hadi Amini1,2 Imtiaz Karim3, Mashrur Chowdhury4, Bhavani Thuraisingham3 1Knight Foundation School of Computing and Information Sciences, Florida International University,...
+SONRA: Communication-Efficient Private Federated Reinforcement Learning with Post-Quantum Authentication for Hojat Allah Salehi1,2, Devrim Aras1,2, Md Jueal Mia1,2, M. Hadi Amini1,2 Imtiaz Karim3, Mashrur Chowdhury4, Bhavani Thuraisingham3 1Knight Foundation School of Computing and Information Sciences, Florida International University, Miami, FL 33199, U...
+
+ORNEK 11 - Control Baselines for Information Systems and Organizations.txt
+Yontem: extracted TXT -> cleaned TXT
+Once dosyasi: data\extracted\Control Baselines for Information Systems and Organizations.txt
+Sonra dosyasi: data\cleaned_v2\Control Baselines for Information Systems and Organizations.txt
+ONCE: NIST Special Publication 800-53B Control Baselines for Information Systems and Organizations JOINT TASK FORCE This publication is available free of charge from: https://doi.org/10.6028/NIST.SP.800-53B NIST Special Publication 800-53B Control Baselines for Information Systems and Organizations JOINT TASK FORCE This publication is available free of c...
+SONRA: NIST Special Publication 800-53B Control Baselines for Information Systems and Organizations This publication is available free of charge from: NIST Special Publication 800-53B Control Baselines for Information Systems and Organizations This publication is available free of charge from: Wilbur L. Ross, Jr., Secretary Walter Copan, NIST Director and...
+
+ORNEK 12 - Security and robustness analysis of encrypted communications.txt
+Yontem: extracted TXT -> cleaned TXT
+Once dosyasi: data\extracted\Security and robustness analysis of encrypted communications.txt
+Sonra dosyasi: data\cleaned_v2\Security and robustness analysis of encrypted communications.txt
+ONCE: International Journal of Network Security & Its Applications (IJNSA) Vol.18, No.4/5, September 2026 DOI: 10.5121/ijnsa.2026.18502 15 SECURITY AND ROBUSTNESS ANALYSIS OF ENCRYPTED COMMUNICATIONS FOR LOCAL HOME AUTOMATION: ESPHOME NATIVE API AND MQTT OVER TLS 1.3 Carlos Roberto González-Escarpeta , Juan Eduardo García Sánchez , José Antonio Hernández...
+SONRA: International Journal of Network Security & Its Applications (IJNSA) Vol.18, No.4/5, September 2026 DOI: 10.5121/ijnsa.2026.18502 15 Carlos Roberto González-Escarpeta , Juan Eduardo García Sánchez , José Antonio Hernández Reyes and Ricardo Francisco Martínez-González Tecnológico Nacional de México – IT de Veracruz, Veracruz, Veracruz, México The ex...
